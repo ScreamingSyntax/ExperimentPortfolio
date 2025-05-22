@@ -15,62 +15,80 @@ const Resume: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-  const resumeJson = {
+  const resumeJson =  {
     "name": "Aaryan Jha",
     "title": "Software Engineer",
-    "contact": {
-      "email": "whcloud91@email.com",
-      "github": "https://github.com/ScreamingSyntax",
-      "linkedin": "https://www.linkedin.com/in/aaryanjha/",
-      "location": "Nepal",
-    },
-    "summary": "Software Engineer passionate about delivering top-notch user experiences, with strong expertise in .NET development and mobile app development using various frameworks.",
-    "skills": {
-      "languages": ["C#", "Dart", "JavaScript", "HTML/CSS", "SQL"],
-      "frameworks": ["ASP.NET Core", "Entity Framework", "Flutter", "MVC"],
-      "databases": ["PostgreSQL", "SQL Server", "Firebase"],
-      "tools": ["Visual Studio", "VS Code", "Git", "Docker", "Azure DevOps"],
-      "other": ["REST APIs", "Clean Architecture", "Multi-tenant systems", "IoT Integration"]
-    },
+    "technicalExpertise": [
+      "ASP.NET Web API",
+      "ASP.NET MVC",
+      "Entity Framework (EF) Core",
+      "Flutter",
+      "PostgreSQL",
+      "SQL Server",
+      "LINQ",
+      "Clean Architecture"
+    ],
     "experience": [
       {
-        "position": ".NET Developer",
         "company": "Vertex Special Technologies",
-        "period": "2024 - Present",
-        "highlights": [
-          "Integrated IoT-based employee punch-in/out system with .NET Core backend",
-          "Implemented payment system in accounting software",
-          "Conducted knowledge transfer sessions across international teams",
-          "Worked on multi-tenant architecture and Clean Architecture",
+        "position": ".NET Developer",
+        "timeline": "2024 - Present",
+        "responsibilities": [
+          "Integrated IoT-based employee punch-in/out system",
+          "Implemented payment gateway for accounting software",
+          "Conducted international knowledge transfer sessions",
+          "Designed multi-tenant architecture",
           "Deployed .NET Core projects to IIS"
+        ],
+        "technologies": [
+          ".NET Core",
+          "PostgreSQL",
+          "IIS",
+          "Azure"
         ]
       },
       {
-        "position": "Full Stack Developer & IoT Engineer",
         "company": "ING Skill Academy",
-        "period": "2023",
-        "highlights": [
-          "Developed multiple college web applications",
-          "Created initial designs in Figma and implemented them",
-          "Designed and implemented databases",
-          "Led IoT projects including Remote Control Smart Dustbin",
-          "Demonstrated projects at 12 locations across Nepal"
+        "position": "Full Stack Developer & IoT Engineer",
+        "timeline": "2023",
+        "responsibilities": [
+          "Developed college web applications",
+          "Created UI/UX designs in Figma",
+          "Implemented database designs",
+          "Led IoT project development",
+          "Demonstrated projects across Nepal"
+        ],
+        "technologies": [
+          "Flutter",
+          "Firebase",
+          "Arduino",
+          "Figma"
         ]
       }
     ],
     "education": {
-      "degree": "Bachelor of Engineering",
-      "field": "Computer Science",
-      "institution": "Tribhuvan University",
-      "year": "2021-2025"
+      "degree": "BSc in Computer Science",
+      "institution": "Itahari International College",
+      "year": "2023"
     },
-    "languages": [
-      {"name": "English", "level": "Professional"},
-      {"name": "Nepali", "level": "Native"}
+    "awards": [
+      {
+        "title": "Triple A Scholarship",
+        "year": "2023",
+        "description": "Top 10% of students in faculty"
+      },
+      {
+        "title": "30-second Pitch Challenge (3rd Place)",
+        "year": "2024",
+        "issuer": "Thammasat University, Thailand"
+      }
     ],
-    "interests": ["IoT Development", "Mobile App Development", "Open Source", "Technical Writing"]
-  };
-
+    "contact": {
+      "email": "whcloud91@email.com",
+      "github": "github.com/ScreamingSyntax",
+      "linkedin": "linkedin.com/in/aaryanjha"
+    }
+  }
   const handleCopy = () => {
     navigator.clipboard.writeText(JSON.stringify(resumeJson, null, 2));
     setCopied(true);
