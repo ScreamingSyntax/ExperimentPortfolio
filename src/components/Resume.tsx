@@ -172,7 +172,7 @@ const Resume: React.FC = () => {
           
           <div className="mt-8 text-center">
             <a
-              href="/files/resume.pdf"
+              href="/resume.pdf"
               download
               className="inline-flex items-center px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors"
             >
