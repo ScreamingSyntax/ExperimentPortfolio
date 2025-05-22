@@ -71,7 +71,111 @@
 
     <!-- Structured Data, Sitemap -->
     <script type="application/ld+json">
-      /* Your JSON-LD from before goes here */
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://www.jhaaaryan.com.np/#resume",
+            "name": "Aaryan Jha",
+            "url": "https://www.jhaaaryan.com.np",
+            "image": "https://www.jhaaaryan.com.np/images/icon.png",
+            "jobTitle": "Software Engineer",
+            "worksFor": {
+              "@id": "https://www.jhaaaryan.com.np/#organization"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/in/aaryanjha",
+              "https://github.com/ScreamingSyntax",
+              "https://medium.com/@jha.aaryan",
+              "https://stackoverflow.com/users/19063017/aaryan-jha"
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://www.jhaaaryan.com.np/#experience",
+            "name": "Vertex Special Technologies",
+            "url": "https://www.jhaaaryan.com.np",
+            "logo": "https://www.jhaaaryan.com.np/images/icon.png"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.jhaaaryan.com.np"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "About Me",
+                "item": "https://www.jhaaaryan.com.np/#about"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Skills",
+                "item": "https://www.jhaaaryan.com.np/#skills"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Experience",
+                "item": "https://www.jhaaaryan.com.np/#experience"
+              },
+              {
+                "@type": "ListItem",
+                "position": 5,
+                "name": "Resume",
+                "item": "https://www.jhaaaryan.com.np/#resume"
+              },
+              {
+                "@type": "ListItem",
+                "position": 6,
+                "name": "Contact",
+                "item": "https://www.jhaaaryan.com.np/#contact"
+              }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What technologies do you specialize in?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "I specialize in scalable web apps with ASP.NET Core, MVC, Entity Framework, PostgreSQL, MS SQL Server, Flutter, Dart, and Firebase."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Where do you currently work?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "I am currently working at Vertex Special Technologies as a .NET Developer."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How can I get in touch with you?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "You can contact me via email at whcloud91@email.com or through my LinkedIn and GitHub profiles."
+                }
+              }
+            ]
+          },
+          {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "email": "whcloud91@email.com",
+            "url": "https://www.jhaaaryan.com.np"
+          }
+        ]
+      }
     </script>
     <link
       rel="sitemap"
