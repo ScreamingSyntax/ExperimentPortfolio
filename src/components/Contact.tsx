@@ -3,6 +3,10 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import SectionHeading from './ui/SectionHeading';
 import { Send, Mail, AlertCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const Contact: React.FC = () => {
   const [ref, inView] = useInView({
@@ -50,29 +54,43 @@ const Contact: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) return;
-    
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setSubmitStatus('success');
-      setFormState({ name: '', email: '', message: '' });
-    } catch (error) {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-      
-      // Reset status after 5 seconds
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 5000);
-    }
-  };
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  console.log('Service ID:', serviceId);  
+  console.log('Template ID:', templateId);
+  console.log('Public ID:', publicKey);
+
+  if (!validateForm()) return;
+
+  setIsSubmitting(true);
+
+  try {
+    const result = await emailjs.send(
+      serviceId,        // Replace with your service ID
+      templateId,       // Replace with your template ID
+      {
+        from_name: formState.name,
+        from_email: formState.email,
+        message: formState.message,
+      },
+      publicKey         // Replace with your public key (formerly user ID)
+    );
+
+    console.log(result.text);
+    setSubmitStatus('success');
+    setFormState({ name: '', email: '', message: '' });
+  } catch (error) {
+    console.error(error);
+    setSubmitStatus('error');
+  } finally {
+    setIsSubmitting(false);
+
+    // Reset status after 5 seconds
+    setTimeout(() => {
+      setSubmitStatus(null);
+    }, 5000);
+  }
+};
 
   const containerVariants = {
     hidden: { opacity: 0 },
