@@ -23,15 +23,17 @@ const Skills: React.FC = () => {
     { name: 'ASP.NET Core', level: 90, category: 'backend', icon: '⚙️' },
     { name: 'Entity Framework', level: 85, category: 'backend', icon: '🔌' },
     { name: 'Web API', level: 90, category: 'backend', icon: '🌐' },
-    { name: 'MVC Architecture', level: 85, category: 'backend', icon: '🏛️' },
+    { name: 'ASP .NET MVC', level: 85, category: 'backend', icon: '🏛️' },
+    { name: 'Clean Architecture', level: 85, category: 'backend', icon: '🏛️' },
+    { name: 'Multitenant Architecture', level: 85, category: 'backend', icon: '🏛️' },
     { name: 'PostgreSQL', level: 80, category: 'database', icon: '🐘' },
     { name: 'SQL Server', level: 85, category: 'database', icon: '🗄️' },
     { name: 'LINQ', level: 90, category: 'database', icon: '🔍' },
     { name: 'Flutter', level: 80, category: 'mobile', icon: '📱' },
-    { name: 'Dart', level: 75, category: 'mobile', icon: '🎯' },
-    { name: 'Firebase', level: 70, category: 'mobile', icon: '🔥' },
-    { name: 'JavaScript', level: 75, category: 'frontend', icon: '📜' },
-    { name: 'HTML/CSS', level: 80, category: 'frontend', icon: '🎨' },
+    { name: 'Dart', level: 50, category: 'mobile', icon: '🎯' },
+    { name: 'Firebase', level: 50, category: 'mobile', icon: '🔥' },
+    { name: 'JavaScript', level: 50, category: 'frontend', icon: '📜' },
+    { name: 'HTML/CSS', level: 70, category: 'frontend', icon: '🎨' },
   ];
 
   const filteredSkills = activeCategory === 'all' 
