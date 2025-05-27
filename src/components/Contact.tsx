@@ -56,9 +56,6 @@ const Contact: React.FC = () => {
 
  const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
-  console.log('Service ID:', serviceId);  
-  console.log('Template ID:', templateId);
-  console.log('Public ID:', publicKey);
 
   if (!validateForm()) return;
 
