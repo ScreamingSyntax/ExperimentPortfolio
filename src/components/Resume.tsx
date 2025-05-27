@@ -84,7 +84,7 @@ const Resume: React.FC = () => {
       }
     ],
     "contact": {
-      "email": "whcloud91@email.com",
+      "email": "whcloud91@gmail.com",
       "github": "github.com/ScreamingSyntax",
       "linkedin": "linkedin.com/in/aaryanjha"
     }
