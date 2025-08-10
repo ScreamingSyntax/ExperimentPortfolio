@@ -30,41 +30,59 @@ const Resume: React.FC = () => {
     ],
     "experience": [
       {
-        "company": "Vertex Special Technologies",
-        "position": ".NET Developer",
-        "timeline": "2024 - Present",
-        "responsibilities": [
-          "Integrated IoT-based employee punch-in/out system",
-          "Implemented payment gateway for accounting software",
-          "Conducted international knowledge transfer sessions",
-          "Designed multi-tenant architecture",
-          "Deployed .NET Core projects to IIS"
+        title: "Software Engineer",
+        company: "Vertex Special Technologies",
+        period: "Feb 2025 - Present",
+        description: [
+          "Implemented payment module in accounting system",
+          "Built advanced Excel import/export for efficient data handling",
+          "Worked on implementing a multi-tenant architecture using .NET Core",
+          "Integrated two-factor authentication (2FA) using an authenticator app and email in .NET Core",
+          "Added trusted device fingerprinting to skip 2FA for known devices",
+          "Built Node.js microservice (Docker + LibreOffice) for Word-to-PDF conversion, integrated with multiple .NET projects",
         ],
-        "technologies": [
-          ".NET Core",
-          "PostgreSQL",
-          "IIS",
-          "Azure"
-        ]
+        skills: ["C#", ".NET Core", "Docker", "Node.js", "LibreOffice", "Microservices", "2FA", "SQL Server","PostgreSQL"],
       },
       {
-        "company": "ING Skill Academy",
-        "position": "Full Stack Developer & IoT Engineer",
-        "timeline": "2023",
-        "responsibilities": [
-          "Developed college web applications",
-          "Created UI/UX designs in Figma",
-          "Implemented database designs",
-          "Led IoT project development",
-          "Demonstrated projects across Nepal"
+        title: "Mentor - Hack4SafeFood Hackathon",
+        company: "Vertex Special Technologies",
+        period: "Jun 2025",
+        description: [
+          "Mentored Team Syntax Error, winners of #Hack4SafeFood Hackathon",
+          "Guided Team Pascal College on project development",
+          "Advised on leadership, pitching, and time management",
+          "Supported World Food Safety Day event for tech-driven food safety solutions",
         ],
-        "technologies": [
-          "Flutter",
-          "Firebase",
-          "Arduino",
-          "Figma"
-        ]
-      }
+        skills: ["Mentoring", "Leadership", "Public Speaking", "Hackathons", "Pitching"],
+      },
+      {
+        title: "Software Engineer Trainee",
+        company: "Vertex Special Technologies",
+        period: "Jul 2024 - Feb 2025",
+        description: [
+          "Developed enterprise applications using .NET Core",
+          "Integrated IoT punch-in/out for real-time attendance tracking",
+          "Led cross-country knowledge transfer sessions (US, Nepal, Pakistan)",
+          "Collaborated with BAs, developers, QA, and frontend teams for successful delivery",
+          "Worked on Clean Architecture principles and implemented in real world projects",
+          "Deployed .NET Core projects to IIS and maintained different servers for QA and UAT",
+        ],
+        skills: ["C#", ".NET Core", "MVC","IIS","Pitching", "SQL Server","PostgreSQL"],
+      },
+      {
+        title: "Full Stack Developer & IoT Engineer",
+        company: "ING Skill Academy",
+        period: "2023",
+        description: [
+          "Developed multiple college web applications",
+          "Created initial designs in Figma and implemented them",
+          "Designed and implemented databases",
+          'Led IoT projects including "Remote Control Smart Dustbin"',
+          "Demonstrated projects at 12 locations across Nepal",
+        ],
+        skills: ["IOT", "Leadership", "Pitching", "Project Lead", "React","Django"],
+  
+      },
     ],
     "education": {
       "degree": "BSc in Computer Science",
