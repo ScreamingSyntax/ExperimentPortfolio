@@ -85,32 +85,33 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
 
         {/* Mobile Navigation */}
         <motion.nav
-          initial={false}
-          animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: '100%' }}
-          transition={{ type: 'tween', duration: 0.3 }}
-          className={cn(
-            'fixed inset-0 bg-white dark:bg-dark-800 flex flex-col items-center justify-center space-y-8 md:hidden',
-            isOpen ? 'block' : 'hidden'
-          )}
-        >
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={handleNavClick}
-              className="text-2xl font-medium hover:text-primary-500 transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-          <button
-            onClick={toggleTheme}
-            className="p-3 rounded-full bg-gray-100 dark:bg-dark-700 hover:bg-gray-200 dark:hover:bg-dark-600 transition-colors mt-4"
-            aria-label="Toggle theme"
-          >
-            {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
-          </button>
-        </motion.nav>
+  initial={false}
+  animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: '100%' }}
+  transition={{ type: 'tween', duration: 0.3 }}
+  className={cn(
+    'fixed inset-0 bg-white dark:bg-dark-800 flex flex-col items-center justify-center space-y-8 md:hidden',
+    !isOpen && 'pointer-events-none' // prevent interaction when closed
+  )}
+>
+  {navLinks.map((link) => (
+    <a
+      key={link.href}
+      href={link.href}
+      onClick={handleNavClick}
+      className="text-2xl font-medium hover:text-primary-500 transition-colors"
+    >
+      {link.label}
+    </a>
+  ))}
+  <button
+    onClick={toggleTheme}
+    className="p-3 rounded-full bg-gray-100 dark:bg-dark-700 hover:bg-gray-200 dark:hover:bg-dark-600 transition-colors mt-4"
+    aria-label="Toggle theme"
+  >
+    {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
+  </button>
+</motion.nav>
+
       </div>
     </motion.header>
   );

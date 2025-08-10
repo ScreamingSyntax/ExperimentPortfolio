@@ -99,38 +99,39 @@ const Skills: React.FC = () => {
 
         {/* Skills Grid */}
         <motion.div
-          ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
-        >
-          {filteredSkills.map((skill, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              className="skill-card group"
-            >
-              <div className="flex items-center mb-2">
-                <span className="text-2xl mr-2">{skill.icon}</span>
-                <h3 className="text-lg font-semibold">{skill.name}</h3>
-              </div>
-              
-              <div className="w-full bg-gray-200 dark:bg-dark-600 rounded-full h-2.5 mb-1">
-                <motion.div 
-                  className="h-2.5 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${skill.level}%` }}
-                  transition={{ duration: 1, delay: 0.2 }}
-                />
-              </div>
-              
-              <div className="text-sm text-gray-600 dark:text-gray-400 text-right">
-                {skill.level}%
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+  ref={ref}
+  variants={containerVariants}
+  initial="hidden"
+  animate={inView ? "visible" : "hidden"}
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6"
+>
+  {filteredSkills.map((skill, index) => (
+    <motion.div
+      key={index}
+      variants={itemVariants}
+      className="skill-card group p-3"
+    >
+      <div className="flex items-center mb-1">
+        <span className="text-xl mr-2">{skill.icon}</span>
+        <h3 className="text-base font-semibold">{skill.name}</h3>
+      </div>
+
+      <div className="w-full bg-gray-200 dark:bg-dark-600 rounded-full h-1.5 mb-1">
+        <motion.div
+          className="h-1.5 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500"
+          initial={{ width: 0 }}
+          animate={{ width: `${skill.level}%` }}
+          transition={{ duration: 1, delay: 0.2 }}
+        />
+      </div>
+
+      <div className="text-xs text-gray-600 dark:text-gray-400 text-right">
+        {skill.level}%
+      </div>
+    </motion.div>
+  ))}
+</motion.div>
+
       </div>
     </section>
   );

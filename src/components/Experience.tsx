@@ -12,15 +12,46 @@ const Experience: React.FC = () => {
 
   const experiences = [
     {
-      title: ".NET Developer",
+      title: "Software Engineer",
       company: "Vertex Special Technologies",
-      period: "2024 - Present",
+      period: "Feb 2025 - Present",
       description: [
-        "Integrated IoT-based employee punch-in/out system with .NET Core backend",
-        "Implemented payment system in accounting software",
-        "Conducted knowledge transfer sessions across international teams",
-        "Worked on multi-tenant architecture and Clean Architecture & Deployed .NET Core projects to IIS",
+        "Implemented payment module in accounting system",
+        "Built advanced Excel import/export for efficient data handling",
+        "Worked on implementing a multi-tenant architecture using .NET Core",
+        "Integrated two-factor authentication (2FA) using an authenticator app and email in .NET Core",
+        "Added trusted device fingerprinting to skip 2FA for known devices",
+        "Built Node.js microservice (Docker + LibreOffice) for Word-to-PDF conversion, integrated with multiple .NET projects",
       ],
+      skills: ["C#", ".NET Core", "Docker", "Node.js", "LibreOffice", "Microservices", "2FA", "SQL Server","PostgreSQL"],
+      icon: <Briefcase className="w-6 h-6" />,
+    },
+    {
+      title: "Mentor - Hack4SafeFood Hackathon",
+      company: "Vertex Special Technologies",
+      period: "Jun 2025",
+      description: [
+        "Mentored Team Syntax Error, winners of #Hack4SafeFood Hackathon",
+        "Guided Team Pascal College on project development",
+        "Advised on leadership, pitching, and time management",
+        "Supported World Food Safety Day event for tech-driven food safety solutions",
+      ],
+      skills: ["Mentoring", "Leadership", "Public Speaking", "Hackathons", "Pitching"],
+      icon: <Laptop className="w-6 h-6" />,
+    },
+    {
+      title: "Software Engineer Trainee",
+      company: "Vertex Special Technologies",
+      period: "Jul 2024 - Feb 2025",
+      description: [
+        "Developed enterprise applications using .NET Core",
+        "Integrated IoT punch-in/out for real-time attendance tracking",
+        "Led cross-country knowledge transfer sessions (US, Nepal, Pakistan)",
+        "Collaborated with BAs, developers, QA, and frontend teams for successful delivery",
+        "Worked on Clean Architecture principles and implemented in real world projects",
+        "Deployed .NET Core projects to IIS and maintained different servers for QA and UAT",
+      ],
+      skills: ["C#", ".NET Core", "MVC","IIS","Pitching", "SQL Server","PostgreSQL"],
       icon: <Briefcase className="w-6 h-6" />,
     },
     {
@@ -34,10 +65,11 @@ const Experience: React.FC = () => {
         'Led IoT projects including "Remote Control Smart Dustbin"',
         "Demonstrated projects at 12 locations across Nepal",
       ],
+      skills: ["IOT", "Leadership", "Pitching", "Project Lead", "React","Django"],
+
       icon: <Laptop className="w-6 h-6" />,
     },
   ];
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -118,8 +150,26 @@ const Experience: React.FC = () => {
                     </li>
                   ))}
                 </ul>
+                <div
+  className={`mt-4 inline-block px-4 py-3 bg-white dark:bg-dark-700 rounded-lg shadow-md border border-gray-200 dark:border-gray-600 ${
+    index % 2 === 0 ? "md:ml-auto" : "md:mr-auto"
+  }`}
+>
+  <h5 className="text-sm font-semibold text-primary-600 dark:text-primary-400 mb-2">
+    Skills
+  </h5>
+  <div className="flex flex-wrap gap-2">
+    {exp.skills.map((skill, i) => (
+      <span
+        key={i}
+        className="px-3 py-1 text-xs bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-200 rounded-full"
+      >
+        {skill}
+      </span>
+    ))}
+  </div>
               </div>
-
+              </div>
               {/* Timeline dot and icon */}
               <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 mt-2">
                 <div className="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white">
