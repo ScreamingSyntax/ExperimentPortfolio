@@ -30,6 +30,15 @@ const Resume: React.FC = () => {
     ],
     "experience": [
       {
+        title: "Tutor",
+        company: "Islignton College",
+        period: "August 2025 - Present (Part - Time)",
+        description: [
+          "Application Development"
+        ],
+        skills: ["C#", ".NET Core","MAUI","Blazor"],
+      },
+      {
         title: "Software Engineer",
         company: "Vertex Special Technologies",
         period: "Feb 2025 - Present",

@@ -12,6 +12,17 @@ const Experience: React.FC = () => {
 
   const experiences = [
     {
+      title: "Tutor (Part - Time)",
+      company: "Islingnton College",
+      period: "August 2025 - Present",
+      description: [
+        "Application Development"
+      ],
+      skills: ["C#", ".NET Core","MAUI","Blazor"],
+      icon: <Briefcase className="w-6 h-6" />,
+    },
+    {
+      
       title: "Software Engineer",
       company: "Vertex Special Technologies",
       period: "Feb 2025 - Present",
