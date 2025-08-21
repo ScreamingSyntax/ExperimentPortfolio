@@ -16,7 +16,7 @@ const Experience: React.FC = () => {
       company: "Islingnton College",
       period: "August 2025 - Present",
       description: [
-        "Application Development"
+        "Teaching application development with a focus on .NET Core Web API, MAUI, and Blazor."
       ],
       skills: ["C#", ".NET Core","MAUI","Blazor"],
       icon: <Briefcase className="w-6 h-6" />,
