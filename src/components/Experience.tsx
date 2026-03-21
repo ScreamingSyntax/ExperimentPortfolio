@@ -11,70 +11,64 @@ const Experience: React.FC = () => {
   });
 
   const experiences = [
-    {
-      title: "Tutor (Part - Time)",
-      company: "Islingnton College",
-      period: "August 2025 - Present",
-      description: [
-        "Teaching application development with a focus on .NET Core Web API, MAUI, and Blazor."
-      ],
-      skills: ["C#", ".NET Core","MAUI","Blazor"],
-      icon: <Briefcase className="w-6 h-6" />,
-    },
-    {
-      
-      title: "Software Engineer",
-      company: "Vertex Special Technologies",
-      period: "Feb 2025 - Present",
-      description: [
-        "Implemented payment module in accounting system",
-        "Built advanced Excel import/export for efficient data handling",
-        "Worked on implementing a multi-tenant architecture using .NET Core",
-        "Integrated two-factor authentication (2FA) using an authenticator app and email in .NET Core",
-        "Added trusted device fingerprinting to skip 2FA for known devices",
-        "Built Node.js microservice (Docker + LibreOffice) for Word-to-PDF conversion, integrated with multiple .NET projects",
-      ],
-      skills: ["C#", ".NET Core", "Docker", "Node.js", "LibreOffice", "Microservices", "2FA", "SQL Server","PostgreSQL"],
-      icon: <Briefcase className="w-6 h-6" />,
-    },
-    {
-      title: "Mentor - Hack4SafeFood Hackathon",
-      company: "Vertex Special Technologies",
-      period: "Jun 2025",
-      description: [
-        "Mentored Team Syntax Error, winners of #Hack4SafeFood Hackathon",
-        "Guided Team Pascal College on project development",
-        "Advised on leadership, pitching, and time management",
-        "Supported World Food Safety Day event for tech-driven food safety solutions",
-      ],
-      skills: ["Mentoring", "Leadership", "Public Speaking", "Hackathons", "Pitching"],
-      icon: <Laptop className="w-6 h-6" />,
-    },
-    {
-      title: "Software Engineer Trainee",
-      company: "Vertex Special Technologies",
-      period: "Jul 2024 - Feb 2025",
-      description: [
-        "Developed enterprise applications using .NET Core",
-        "Integrated IoT punch-in/out for real-time attendance tracking",
-        "Led cross-country knowledge transfer sessions (US, Nepal, Pakistan)",
-        "Collaborated with BAs, developers, QA, and frontend teams for successful delivery",
-        "Worked on Clean Architecture principles and implemented in real world projects",
-        "Deployed .NET Core projects to IIS and maintained different servers for QA and UAT",
-      ],
-      skills: ["C#", ".NET Core", "MVC","IIS","Pitching", "SQL Server","PostgreSQL"],
-      icon: <Briefcase className="w-6 h-6" />,
-    },
+ {
+    title: "Software Engineer",
+    company: "Vertex Special Technologies",
+    period: "Jul 2024 - Present",
+    description: [
+      "Developed a payment system within the accounting module for seamless transactions",
+      "Implemented multi-tenant architecture, 2FA with trusted devices, and device fingerprinting for enhanced security",
+      "Built advanced Excel import/export features for efficient large-scale data handling",
+      "Developed and deployed enterprise applications using .NET Core and IIS",
+      "Integrated IoT-based punch-in/out system for real-time attendance tracking",
+      "Designed and implemented RBAC managing permissions across 325+ APIs",
+      "Restructured API architecture for improved scalability, modularity, and maintainability",
+      "Developed OCR processing APIs using AWS S3, SignalR, and webhook-based async workflows",
+      "Built version-controlled document system supporting edits and multi-session tracking",
+      "Implemented secure API Gateway with API key management using Argon2",
+      "Designed idempotent webhook patterns for reliable async processing",
+      "Collaborated with cross-functional teams and led international knowledge transfer sessions (US, Nepal, Pakistan)",
+      "Prepared technical documentation (SRS, ERD, sequence diagrams, architecture)",
+      "Owned backend development lifecycle from design to deployment",
+      "Mentored Team Syntax Error (winners) and other teams during Hack4SafeFood Hackathon",
+      "Guided participants during Hack4SafeFood Hackathon on project development, technical decisions, pitching, and time management",
+      "Contributed to World Food Safety Day initiative through mentorship and tech support during Hack4SafeFood Hackathon"
+    ],
+    skills: [
+      "C#", ".NET Core", "ASP.NET Core", "IIS",
+      "Microservices", "SQL Server", "PostgreSQL",
+      "2FA", "Device Fingerprinting", "RBAC",
+      "AWS S3", "SignalR", "Docker",
+      "Mentoring", "Leadership", "Public Speaking",
+      "Hackathons", "Pitching"
+    ],
+    icon: <Briefcase className="w-6 h-6" />,
+  },
+   {
+    title: "Tutor & Final Year Project Supervisor",
+    company: "Islington College",
+    period: "Aug 2025 - Present",
+    description: [
+      "Deliver lectures on application development using .NET Core Web API, MAUI, and Blazor",
+      "Mentor final-year students throughout the project lifecycle",
+      "Provide code reviews and technical guidance to improve project quality",
+      "Evaluate student projects through assessments, documentation reviews, and viva",
+      "Conduct project defense sessions assessing technical depth and implementation"
+    ],
+    skills: [
+      "C#", ".NET Core", "MAUI", "Blazor",
+      "Mentoring", "Code Review", "Public Speaking"
+    ],
+    icon: <Briefcase className="w-6 h-6" />,
+  },
     {
       title: "Full Stack Developer & IoT Engineer",
       company: "ING Skill Academy",
       period: "2023",
       description: [
-        "Developed multiple college web applications",
-        "Created initial designs in Figma and implemented them",
-        "Designed and implemented databases",
+        "Developed and delivered  multiple college web applications",
         'Led IoT projects including "Remote Control Smart Dustbin"',
-        "Demonstrated projects at 12 locations across Nepal",
+        "Showcased projects at 12 nationwide Futurama events, reaching and engaging 46,000+ students."
       ],
       skills: ["IOT", "Leadership", "Pitching", "Project Lead", "React","Django"],
 

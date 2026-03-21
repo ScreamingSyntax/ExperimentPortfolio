@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
     { 
       icon: <FileText size={20} />, 
       label: 'Resume',
-      href: 'files/resume.pdf', 
+      href: '/resume.pdf', 
       download: true,
       ariaLabel: 'Download Resume' 
     },

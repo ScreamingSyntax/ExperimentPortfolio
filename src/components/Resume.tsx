@@ -16,105 +16,123 @@ const Resume: React.FC = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   const resumeJson =  {
-    "name": "Aaryan Jha",
-    "title": "Software Engineer",
-    "technicalExpertise": [
-      "ASP.NET Web API",
-      "ASP.NET MVC",
-      "Entity Framework (EF) Core",
-      "Flutter",
-      "PostgreSQL",
-      "SQL Server",
-      "LINQ",
-      "Clean Architecture"
-    ],
-    "experience": [
-      {
-        title: "Tutor",
-        company: "Islignton College",
-        period: "August 2025 - Present (Part - Time)",
-        description: [
-          "Application Development"
-        ],
-        skills: ["C#", ".NET Core","MAUI","Blazor"],
-      },
-      {
-        title: "Software Engineer",
-        company: "Vertex Special Technologies",
-        period: "Feb 2025 - Present",
-        description: [
-          "Implemented payment module in accounting system",
-          "Built advanced Excel import/export for efficient data handling",
-          "Worked on implementing a multi-tenant architecture using .NET Core",
-          "Integrated two-factor authentication (2FA) using an authenticator app and email in .NET Core",
-          "Added trusted device fingerprinting to skip 2FA for known devices",
-          "Built Node.js microservice (Docker + LibreOffice) for Word-to-PDF conversion, integrated with multiple .NET projects",
-        ],
-        skills: ["C#", ".NET Core", "Docker", "Node.js", "LibreOffice", "Microservices", "2FA", "SQL Server","PostgreSQL"],
-      },
-      {
-        title: "Mentor - Hack4SafeFood Hackathon",
-        company: "Vertex Special Technologies",
-        period: "Jun 2025",
-        description: [
-          "Mentored Team Syntax Error, winners of #Hack4SafeFood Hackathon",
-          "Guided Team Pascal College on project development",
-          "Advised on leadership, pitching, and time management",
-          "Supported World Food Safety Day event for tech-driven food safety solutions",
-        ],
-        skills: ["Mentoring", "Leadership", "Public Speaking", "Hackathons", "Pitching"],
-      },
-      {
-        title: "Software Engineer Trainee",
-        company: "Vertex Special Technologies",
-        period: "Jul 2024 - Feb 2025",
-        description: [
-          "Developed enterprise applications using .NET Core",
-          "Integrated IoT punch-in/out for real-time attendance tracking",
-          "Led cross-country knowledge transfer sessions (US, Nepal, Pakistan)",
-          "Collaborated with BAs, developers, QA, and frontend teams for successful delivery",
-          "Worked on Clean Architecture principles and implemented in real world projects",
-          "Deployed .NET Core projects to IIS and maintained different servers for QA and UAT",
-        ],
-        skills: ["C#", ".NET Core", "MVC","IIS","Pitching", "SQL Server","PostgreSQL"],
-      },
-      {
-        title: "Full Stack Developer & IoT Engineer",
-        company: "ING Skill Academy",
-        period: "2023",
-        description: [
-          "Developed multiple college web applications",
-          "Created initial designs in Figma and implemented them",
-          "Designed and implemented databases",
-          'Led IoT projects including "Remote Control Smart Dustbin"',
-          "Demonstrated projects at 12 locations across Nepal",
-        ],
-        skills: ["IOT", "Leadership", "Pitching", "Project Lead", "React","Django"],
-  
-      },
-    ],
-    "education": {
-      "degree": "BSc in Computer Science",
-      "institution": "Itahari International College",
-      "year": "2023"
+    
+  "name": "Aaryan Jha",
+  "title": "Software Engineer",
+  "technicalExpertise": [
+    "ASP.NET Core",
+    "ASP.NET MVC",
+    "Entity Framework Core",
+    "LINQ",
+    "REST APIs",
+    "JWT Authentication",
+    "2FA & Device Fingerprinting",
+    "Clean Architecture",
+    "Flutter",
+    "SQL Server",
+    "PostgreSQL"
+  ],
+  "experience": [
+    {
+      "title": "Software Engineer",
+      "company": "Vertex Special Technologies",
+      "period": "Jul 2024 - Present",
+      "description": [
+        "Developed a payment system within the accounting module for seamless transactions",
+        "Implemented multi-tenant architecture, 2FA with trusted devices, and device fingerprinting for enhanced security",
+        "Built advanced Excel import/export features for efficient large-scale data handling",
+        "Developed and deployed enterprise applications using .NET Core and IIS",
+        "Integrated IoT-based punch-in/out system for real-time attendance tracking",
+        "Designed and implemented RBAC managing permissions across 325+ APIs",
+        "Restructured API architecture for improved scalability, modularity, and maintainability",
+        "Developed OCR processing APIs using AWS S3, SignalR, and webhook-based async workflows",
+        "Built version-controlled document system supporting edits and multi-session tracking",
+        "Implemented secure API Gateway with API key management using Argon2",
+        "Designed idempotent webhook patterns for reliable asynchronous processing",
+        "Collaborated with cross-functional teams and conducted knowledge transfer sessions across US, Nepal, and Pakistan",
+        "Prepared technical documentation including SRS, ERD, sequence diagrams, and architecture designs",
+        "Owned backend development lifecycle from design to deployment",
+        "Mentored Team Syntax Error (winners) and other teams during Hack4SafeFood Hackathon",
+        "Guided participants during Hack4SafeFood Hackathon on development, architecture, pitching, and time management",
+        "Contributed to World Food Safety Day initiatives through mentorship during Hack4SafeFood Hackathon"
+      ],
+      "skills": [
+        "C#",
+        ".NET Core",
+        "ASP.NET Core",
+        "IIS",
+        "Microservices",
+        "SQL Server",
+        "PostgreSQL",
+        "2FA",
+        "Device Fingerprinting",
+        "RBAC",
+        "AWS S3",
+        "SignalR",
+        "Docker",
+        "Mentoring",
+        "Leadership",
+        "Public Speaking",
+        "Hackathons",
+        "Pitching"
+      ]
     },
-    "awards": [
-      {
-        "title": "Triple A Scholarship",
-        "year": "2023",
-        "description": "Top 10% of students in faculty"
-      },
-      {
-        "title": "30-second Pitch Challenge (3rd Place)",
-        "year": "2024",
-        "issuer": "Thammasat University, Thailand"
-      }
-    ],
-    "contact": {
-      "email": "whcloud91@gmail.com",
-      "github": "github.com/ScreamingSyntax",
-      "linkedin": "linkedin.com/in/aaryanjha"
+    {
+      "title": "Tutor & Final Year Project Supervisor",
+      "company": "Islington College",
+      "period": "Aug 2025 - Present",
+      "description": [
+        "Deliver lectures on application development using .NET Core Web API, MAUI, and Blazor",
+        "Mentor final-year students throughout the project lifecycle ensuring timely delivery",
+        "Provide code reviews and technical guidance for project improvements",
+        "Evaluate student projects through assessments, documentation review, and viva examinations",
+        "Conduct project defense sessions assessing technical depth and implementation quality"
+      ],
+      "skills": [
+        "C#",
+        ".NET Core",
+        "MAUI",
+        "Blazor",
+        "Mentoring",
+        "Code Review",
+        "Public Speaking"
+      ]
     }
+  ],
+  "education": {
+    "degree": "BSc (Hons) Computing",
+    "institution": "Itahari International College (London Metropolitan University)",
+    "year": "2025"
+  },
+  "awards": [
+    {
+      "title": "Triple A Scholarship",
+      "year": "2024-2026",
+      "description": "Awarded for excellence in academics, attendance, and discipline"
+    },
+    {
+      "title": "30-Second Pitch Challenge (3rd Place)",
+      "year": "2024",
+      "issuer": "DesignThinkers Academy, Thailand"
+    },
+    {
+      "title": "International Exposure Program",
+      "year": "2024",
+      "description": "Selected for international academic and innovation program in Thailand"
+    },
+    {
+      "title": "Hack4SafeFood Hackathon Mentor",
+      "year": "2025",
+      "description": "Mentored winning team (Team Syntax Error)"
+    }
+  ],
+  "contact": {
+    "email": "whcloud91@gmail.com",
+    "github": "github.com/screamingsyntax",
+    "linkedin": "linkedin.com/in/aaryanjha",
+    "portfolio": "aaryanj.com.np"
+  }
+
   }
   const handleCopy = () => {
     navigator.clipboard.writeText(JSON.stringify(resumeJson, null, 2));
