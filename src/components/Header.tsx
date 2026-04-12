@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon, Menu, X } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -8,112 +8,166 @@ interface HeaderProps {
   toggleTheme: () => void;
 }
 
+const navLinks = [
+  { href: '#about', label: 'About' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#resume', label: 'Resume' },
+  { href: '#contact', label: 'Contact' },
+];
+
 const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY;
-      setScrolled(offset > 50);
+      setScrolled(window.scrollY > 50);
+
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0);
+
+      const sections = navLinks.map(l => l.href.slice(1));
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && window.scrollY >= el.offsetTop - 200) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { href: '#about', label: 'About' },
-    { href: '#skills', label: 'Skills' },
-    { href: '#experience', label: 'Experience' },
-    { href: '#resume', label: 'Resume' },
-    { href: '#contact', label: 'Contact' },
-  ];
-
-  const handleMenuToggle = () => setIsOpen(!isOpen);
-  const handleNavClick = () => setIsOpen(false);
-
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled 
-          ? 'bg-white/80 dark:bg-dark-800/80 backdrop-blur-lg py-3 shadow-md'
-          : 'bg-transparent py-5'
-      )}
-    >
-      <div className="container mx-auto flex justify-between items-center">
-        <a 
-          href="#" 
-          className="text-xl font-bold z-10 relative"
-        >
-          <span className="text-gradient">Aaryan Jha</span>
-        </a>
+    <>
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+        className={cn(
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+          scrolled
+            ? 'glass-strong py-3 shadow-lg shadow-black/5 dark:shadow-black/20'
+            : 'bg-transparent py-5'
+        )}
+      >
+        <div className="container mx-auto flex justify-between items-center">
+          <a href="#" className="relative z-10 group">
+            <span className="text-xl font-bold font-display text-gradient">
+              AJ
+            </span>
+            <span className="text-xl font-light text-dark-400 dark:text-dark-200 ml-1 hidden sm:inline group-hover:text-primary-500 transition-colors">
+              Aaryan Jha
+            </span>
+          </a>
 
-        {/* Mobile menu button */}
-        <button 
-          onClick={handleMenuToggle} 
-          className="md:hidden z-10 relative"
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-dark-500 dark:text-dark-100 hover:text-primary-500 dark:hover:text-primary-400 transition-colors relative group"
-            >
-              {link.label}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
-            </a>
-          ))}
           <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full bg-gray-100 dark:bg-dark-700 hover:bg-gray-200 dark:hover:bg-dark-600 transition-colors"
-            aria-label="Toggle theme"
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden z-10 relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-700 transition-colors"
+            aria-label="Toggle menu"
           >
-            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            {isOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
-        </nav>
 
-        {/* Mobile Navigation */}
-        <motion.nav
-  initial={false}
-  animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: '100%' }}
-  transition={{ type: 'tween', duration: 0.3 }}
-  className={cn(
-    'fixed inset-0 bg-white dark:bg-dark-800 flex flex-col items-center justify-center space-y-8 md:hidden',
-    !isOpen && 'pointer-events-none' // prevent interaction when closed
-  )}
->
-  {navLinks.map((link) => (
-    <a
-      key={link.href}
-      href={link.href}
-      onClick={handleNavClick}
-      className="text-2xl font-medium hover:text-primary-500 transition-colors"
-    >
-      {link.label}
-    </a>
-  ))}
-  <button
-    onClick={toggleTheme}
-    className="p-3 rounded-full bg-gray-100 dark:bg-dark-700 hover:bg-gray-200 dark:hover:bg-dark-600 transition-colors mt-4"
-    aria-label="Toggle theme"
-  >
-    {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
-  </button>
-</motion.nav>
+          <nav className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.slice(1);
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    'relative px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300',
+                    isActive
+                      ? 'text-primary-600 dark:text-primary-400'
+                      : 'text-dark-400 dark:text-dark-200 hover:text-primary-500 dark:hover:text-primary-400'
+                  )}
+                >
+                  {link.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeSection"
+                      className="absolute inset-0 bg-primary-50 dark:bg-primary-900/20 rounded-lg -z-10"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </a>
+              );
+            })}
+            <div className="w-px h-6 bg-gray-200 dark:bg-dark-600 mx-2" />
+            <button
+              onClick={toggleTheme}
+              className="p-2.5 rounded-xl bg-gray-100 dark:bg-dark-700 hover:bg-gray-200 dark:hover:bg-dark-600 transition-all duration-300 hover:scale-105 active:scale-95"
+              aria-label="Toggle theme"
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={theme}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+                </motion.div>
+              </AnimatePresence>
+            </button>
+          </nav>
 
-      </div>
-    </motion.header>
+          <AnimatePresence>
+            {isOpen && (
+              <motion.nav
+                initial={{ opacity: 0, clipPath: 'circle(0% at calc(100% - 2rem) 2rem)' }}
+                animate={{ opacity: 1, clipPath: 'circle(150% at calc(100% - 2rem) 2rem)' }}
+                exit={{ opacity: 0, clipPath: 'circle(0% at calc(100% - 2rem) 2rem)' }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="fixed inset-0 bg-white dark:bg-dark-900 flex flex-col items-center justify-center gap-6 md:hidden"
+              >
+                {navLinks.map((link, i) => (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + i * 0.05 }}
+                    className={cn(
+                      'text-2xl font-display font-medium transition-colors',
+                      activeSection === link.href.slice(1)
+                        ? 'text-gradient'
+                        : 'hover:text-primary-500'
+                    )}
+                  >
+                    {link.label}
+                  </motion.a>
+                ))}
+                <motion.button
+                  onClick={toggleTheme}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="p-3 rounded-xl bg-gray-100 dark:bg-dark-700 mt-4"
+                  aria-label="Toggle theme"
+                >
+                  {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
+                </motion.button>
+              </motion.nav>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.header>
+
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary-500 via-accent-500 to-secondary-500 z-[60] origin-left"
+        style={{ scaleX: scrollProgress / 100 }}
+      />
+    </>
   );
 };
 

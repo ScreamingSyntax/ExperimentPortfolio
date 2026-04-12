@@ -1,190 +1,184 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import SectionHeading from "./ui/SectionHeading";
-import { Briefcase, Laptop } from "lucide-react";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import SectionHeading from './ui/SectionHeading';
+import { Briefcase, GraduationCap, Laptop, ChevronDown, ChevronUp, MapPin } from 'lucide-react';
 
-const Experience: React.FC = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const experiences = [
- {
-    title: "Software Engineer",
-    company: "Vertex Special Technologies",
-    period: "Jul 2024 - Present",
+const experiences = [
+  {
+    title: 'Software Engineer',
+    company: 'Vertex Special Technologies',
+    location: 'Nepal',
+    period: 'Jul 2024 — Present',
+    type: 'Full-time',
     description: [
-      "Developed a payment system within the accounting module for seamless transactions",
-      "Implemented multi-tenant architecture, 2FA with trusted devices, and device fingerprinting for enhanced security",
-      "Built advanced Excel import/export features for efficient large-scale data handling",
-      "Developed and deployed enterprise applications using .NET Core and IIS",
-      "Integrated IoT-based punch-in/out system for real-time attendance tracking",
-      "Designed and implemented RBAC managing permissions across 325+ APIs",
-      "Restructured API architecture for improved scalability, modularity, and maintainability",
-      "Developed OCR processing APIs using AWS S3, SignalR, and webhook-based async workflows",
-      "Built version-controlled document system supporting edits and multi-session tracking",
-      "Implemented secure API Gateway with API key management using Argon2",
-      "Designed idempotent webhook patterns for reliable async processing",
-      "Collaborated with cross-functional teams and led international knowledge transfer sessions (US, Nepal, Pakistan)",
-      "Prepared technical documentation (SRS, ERD, sequence diagrams, architecture)",
-      "Owned backend development lifecycle from design to deployment",
-      "Mentored Team Syntax Error (winners) and other teams during Hack4SafeFood Hackathon",
-      "Guided participants during Hack4SafeFood Hackathon on project development, technical decisions, pitching, and time management",
-      "Contributed to World Food Safety Day initiative through mentorship and tech support during Hack4SafeFood Hackathon"
+      'Developed a payment system within the accounting module for seamless transactions',
+      'Implemented multi-tenant architecture, 2FA with trusted devices, and device fingerprinting',
+      'Built advanced Excel import/export features for efficient large-scale data handling',
+      'Designed and implemented RBAC managing permissions across 325+ APIs',
+      'Restructured API architecture for improved scalability and maintainability',
+      'Developed OCR processing APIs using AWS S3, SignalR, and webhook-based async workflows',
+      'Built version-controlled document system with multi-session tracking',
+      'Implemented secure API Gateway with API key management using Argon2',
+      'Designed idempotent webhook patterns for reliable async processing',
+      'Led international knowledge transfer sessions (US, Nepal, Pakistan)',
+      'Mentored winning team (Team Syntax Error) at Hack4SafeFood Hackathon',
     ],
-    skills: [
-      "C#", ".NET Core", "ASP.NET Core", "IIS",
-      "Microservices", "SQL Server", "PostgreSQL",
-      "2FA", "Device Fingerprinting", "RBAC",
-      "AWS S3", "SignalR", "Docker",
-      "Mentoring", "Leadership", "Public Speaking",
-      "Hackathons", "Pitching"
-    ],
-    icon: <Briefcase className="w-6 h-6" />,
+    skills: ['C#', '.NET Core', 'SQL Server', 'PostgreSQL', 'AWS S3', 'SignalR', 'Docker', 'RBAC', 'Microservices'],
+    icon: <Briefcase className="w-5 h-5" />,
+    color: 'from-primary-500 to-primary-600',
+    dotColor: 'bg-primary-500',
   },
-   {
-    title: "Tutor & Final Year Project Supervisor",
-    company: "Islington College",
-    period: "Aug 2025 - Present",
+  {
+    title: 'Tutor & FYP Supervisor',
+    company: 'Islington College',
+    location: 'Nepal',
+    period: 'Aug 2025 — Present',
+    type: 'Part-time',
     description: [
-      "Deliver lectures on application development using .NET Core Web API, MAUI, and Blazor",
-      "Mentor final-year students throughout the project lifecycle",
-      "Provide code reviews and technical guidance to improve project quality",
-      "Evaluate student projects through assessments, documentation reviews, and viva",
-      "Conduct project defense sessions assessing technical depth and implementation"
+      'Deliver lectures on application development using .NET Core Web API, MAUI, and Blazor',
+      'Mentor final-year students throughout the project lifecycle',
+      'Provide code reviews and technical guidance to improve project quality',
+      'Evaluate student projects through assessments, documentation reviews, and viva',
+      'Conduct project defense sessions assessing technical depth and implementation',
     ],
-    skills: [
-      "C#", ".NET Core", "MAUI", "Blazor",
-      "Mentoring", "Code Review", "Public Speaking"
-    ],
-    icon: <Briefcase className="w-6 h-6" />,
+    skills: ['C#', '.NET Core', 'MAUI', 'Blazor', 'Mentoring', 'Code Review'],
+    icon: <GraduationCap className="w-5 h-5" />,
+    color: 'from-secondary-500 to-secondary-600',
+    dotColor: 'bg-secondary-500',
   },
-    {
-      title: "Full Stack Developer & IoT Engineer",
-      company: "ING Skill Academy",
-      period: "2023",
-      description: [
-        "Developed and delivered  multiple college web applications",
-        'Led IoT projects including "Remote Control Smart Dustbin"',
-        "Showcased projects at 12 nationwide Futurama events, reaching and engaging 46,000+ students."
-      ],
-      skills: ["IOT", "Leadership", "Pitching", "Project Lead", "React","Django"],
+  {
+    title: 'Full Stack Developer & IoT Engineer',
+    company: 'ING Skill Academy',
+    location: 'Nepal',
+    period: '2023',
+    type: 'Contract',
+    description: [
+      'Developed and delivered multiple college web applications',
+      'Led IoT projects including "Remote Control Smart Dustbin"',
+      'Showcased projects at 12 nationwide Futurama events, reaching 46,000+ students',
+    ],
+    skills: ['IoT', 'React', 'Django', 'Leadership', 'Pitching'],
+    icon: <Laptop className="w-5 h-5" />,
+    color: 'from-accent-500 to-accent-600',
+    dotColor: 'bg-accent-500',
+  },
+];
 
-      icon: <Laptop className="w-6 h-6" />,
-    },
-  ];
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.3 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
+function ExperienceCard({ exp, index }: { exp: typeof experiences[0]; index: number }) {
+  const [expanded, setExpanded] = useState(false);
+  const [cardRef, cardInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const displayItems = expanded ? exp.description : exp.description.slice(0, 3);
 
   return (
-    <section id="experience" className="section bg-gray-50 dark:bg-dark-800">
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, x: -30 }}
+      animate={cardInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.15 }}
+      className="relative pl-8 md:pl-12 pb-12 last:pb-0"
+    >
+      <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-gray-200 dark:from-dark-600 to-transparent" />
+
+      <div className={`absolute left-0 top-2 w-3 h-3 rounded-full ${exp.dotColor} -translate-x-[6px] ring-4 ring-white dark:ring-dark-800`}>
+        <div className={`absolute inset-0 rounded-full ${exp.dotColor} animate-ping opacity-20`} />
+      </div>
+
+      <div className="group bg-white dark:bg-dark-700 rounded-2xl border border-gray-100 dark:border-dark-600 hover:border-primary-200 dark:hover:border-primary-700 transition-all duration-500 overflow-hidden hover:shadow-xl">
+        <div className="p-6">
+          <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <div className={`p-1.5 rounded-lg bg-gradient-to-r ${exp.color} text-white`}>
+                  {exp.icon}
+                </div>
+                <h3 className="text-xl font-bold font-display text-gray-800 dark:text-white">
+                  {exp.title}
+                </h3>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <span className="text-primary-500 font-semibold">{exp.company}</span>
+                <span className="flex items-center gap-1 text-gray-400 dark:text-dark-300">
+                  <MapPin size={12} /> {exp.location}
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="px-3 py-1 text-xs font-medium bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-300 rounded-full">
+                {exp.period}
+              </span>
+              <span className="px-3 py-1 text-xs font-medium bg-gray-100 dark:bg-dark-600 text-gray-600 dark:text-dark-200 rounded-full">
+                {exp.type}
+              </span>
+            </div>
+          </div>
+
+          <ul className="space-y-2 mb-4">
+            <AnimatePresence>
+              {displayItems.map((item, i) => (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-dark-200"
+                >
+                  <span className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 bg-gradient-to-r ${exp.color}`} />
+                  {item}
+                </motion.li>
+              ))}
+            </AnimatePresence>
+          </ul>
+
+          {exp.description.length > 3 && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="flex items-center gap-1 text-sm text-primary-500 hover:text-primary-600 font-medium transition-colors mb-4"
+            >
+              {expanded ? (
+                <>Show less <ChevronUp size={14} /></>
+              ) : (
+                <>Show {exp.description.length - 3} more <ChevronDown size={14} /></>
+              )}
+            </button>
+          )}
+
+          <div className="flex flex-wrap gap-2 pt-4 border-t border-gray-100 dark:border-dark-600">
+            {exp.skills.map((skill, i) => (
+              <span
+                key={i}
+                className="px-2.5 py-1 text-xs font-medium bg-gray-50 dark:bg-dark-600 text-gray-600 dark:text-dark-200 rounded-lg border border-gray-100 dark:border-dark-500 hover:border-primary-300 dark:hover:border-primary-700 transition-colors"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+const Experience: React.FC = () => {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  return (
+    <section id="experience" className="section bg-gray-50/50 dark:bg-dark-800/50">
       <div className="container">
         <SectionHeading
           title="Professional Journey"
-          subtitle="My work experience"
+          subtitle="Building impactful products and mentoring the next generation"
+          label="Experience"
         />
 
         <motion.div
           ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="mt-16 max-w-4xl mx-auto relative"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          className="max-w-3xl mx-auto mt-12"
         >
-          {/* Timeline line */}
-          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary-500 to-secondary-500 transform md:-translate-x-1/2" />
-
           {experiences.map((exp, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              className={`flex flex-col md:flex-row mb-16 ${
-                index % 2 === 0 ? "md:flex-row-reverse" : ""
-              }`}
-            >
-              {/* Content */}
-              <div
-                className={`md:w-1/2 px-4 ${
-                  index % 2 === 0
-                    ? "md:pr-12 md:text-right"
-                    : "md:pl-12 md:text-left"
-                } text-center`}
-              >
-                <h3 className="text-2xl font-bold mb-1 text-gray-800 dark:text-gray-100">
-                  {exp.title}
-                </h3>
-                <h4 className="text-lg font-medium mb-4 text-primary-600 dark:text-primary-400">
-                  {exp.company}
-                </h4>
-                <span className="inline-block px-3 py-1 mb-4 text-sm bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-200 rounded-full">
-                  {exp.period}
-                </span>
-
-                <ul
-                  className={`space-y-2 text-gray-600 dark:text-gray-300 ${
-                    index % 2 === 0 ? "md:text-right" : ""
-                  }`}
-                >
-                  {exp.description.map((item, i) => (
-                    <li
-                      key={i}
-                      className={`flex items-start gap-2 ${
-                        index % 2 === 0
-                          ? "justify-end md:pl-4"
-                          : "justify-start md:pr-4"
-                      }`}
-                    >
-                      <span className="w-1 h-1 mt-2 rounded-full bg-primary-500 flex-shrink-0" />
-                      <span className="max-w-prose text-left">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div
-  className={`mt-4 inline-block px-4 py-3 bg-white dark:bg-dark-700 rounded-lg shadow-md border border-gray-200 dark:border-gray-600 ${
-    index % 2 === 0 ? "md:ml-auto" : "md:mr-auto"
-  }`}
->
-  <h5 className="text-sm font-semibold text-primary-600 dark:text-primary-400 mb-2">
-    Skills
-  </h5>
-  <div className="flex flex-wrap gap-2">
-    {exp.skills.map((skill, i) => (
-      <span
-        key={i}
-        className="px-3 py-1 text-xs bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-200 rounded-full"
-      >
-        {skill}
-      </span>
-    ))}
-  </div>
-              </div>
-              </div>
-              {/* Timeline dot and icon */}
-              <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 mt-2">
-                <div className="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white">
-                  {exp.icon}
-                </div>
-              </div>
-
-              {/* Spacer for layout */}
-              <div className="md:w-1/2"></div>
-            </motion.div>
+            <ExperienceCard key={index} exp={exp} index={index} />
           ))}
         </motion.div>
       </div>

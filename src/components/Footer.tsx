@@ -1,55 +1,53 @@
-import React from 'react';
-import { Github, Linkedin, Mail, FileText, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Mail, FileText, ArrowUpRight } from 'lucide-react';
+
+const socialLinks = [
+  {
+    icon: <Github size={18} />,
+    label: 'GitHub',
+    href: 'https://github.com/ScreamingSyntax',
+  },
+  {
+    icon: <Linkedin size={18} />,
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/aaryanjha/',
+  },
+  {
+    icon: <Mail size={18} />,
+    label: 'Email',
+    href: 'mailto:whcloud91@gmail.com',
+  },
+  {
+    icon: <FileText size={18} />,
+    label: 'Resume',
+    href: '/resume.pdf',
+    download: true,
+  },
+];
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  
-  const socialLinks = [
-    { 
-      icon: <Github size={20} />, 
-      label: 'GitHub',
-      href: 'https://github.com/ScreamingSyntax', 
-      ariaLabel: 'GitHub Profile' 
-    },
-    { 
-      icon: <Linkedin size={20} />, 
-      label: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/aaryanjha/', 
-      ariaLabel: 'LinkedIn Profile' 
-    },
-    { 
-      icon: <Mail size={20} />, 
-      label: 'Email',
-      href: 'mailto:whcloud91@gmail.com', 
-      ariaLabel: 'Send Email' 
-    },
-    { 
-      icon: <FileText size={20} />, 
-      label: 'Resume',
-      href: '/resume.pdf', 
-      download: true,
-      ariaLabel: 'Download Resume' 
-    },
-    { 
-      icon: <ExternalLink size={20} />, 
-      label: 'Medium',
-      href: 'https://medium.com/@jha.aaryan', 
-      ariaLabel: 'Medium Profile' 
-    }
-  ];
 
   return (
-    <footer className="bg-dark-900 text-white py-12">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center">
-          <h2 className="text-3xl font-bold mb-6">Let's Build Something Amazing</h2>
-          
-          <p className="text-gray-300 max-w-2xl text-center mb-8">
-            I'm always open to discussing new projects, creative ideas, or
-            opportunities to be part of your vision.
-          </p>
-          
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
+    <footer className="relative bg-dark-900 text-white overflow-hidden">
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-500 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-500 rounded-full blur-[150px]" />
+      </div>
+
+      <div className="relative">
+        <div className="container mx-auto px-4 py-16 md:py-20">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold font-display mb-4">
+              Let's Build Something{' '}
+              <span className="text-gradient">Amazing</span>
+            </h2>
+            <p className="text-dark-200 text-lg leading-relaxed">
+              I'm always open to discussing new projects, creative ideas, or
+              opportunities to be part of your vision.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
             {socialLinks.map((link, index) => (
               <a
                 key={index}
@@ -57,20 +55,28 @@ const Footer: React.FC = () => {
                 download={link.download}
                 target={link.download ? '_self' : '_blank'}
                 rel={!link.download ? 'noopener noreferrer' : undefined}
-                aria-label={link.ariaLabel}
-                className="flex items-center gap-2 px-4 py-2 bg-dark-800 hover:bg-dark-700 rounded-lg transition-colors duration-300"
+                className="group flex items-center gap-2 px-5 py-2.5 bg-dark-800 hover:bg-dark-700 rounded-xl border border-dark-700 hover:border-primary-700 transition-all duration-300"
               >
-                {link.icon}
-                <span>{link.label}</span>
+                <span className="text-dark-300 group-hover:text-primary-400 transition-colors">
+                  {link.icon}
+                </span>
+                <span className="text-sm font-medium">{link.label}</span>
+                <ArrowUpRight size={12} className="text-dark-400 group-hover:text-primary-400 transition-colors" />
               </a>
             ))}
           </div>
-          
-          <div className="w-full max-w-lg h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent my-8"></div>
-          
-          <p className="text-gray-400 text-sm text-center">
-            &copy; {currentYear} Aaryan Jha. All rights reserved.
-          </p>
+
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-dark-600 to-transparent mb-8" />
+
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-dark-300">
+            <p>
+              &copy; {currentYear} Aaryan Jha. Built with React & Three.js
+            </p>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span>Available for hire</span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
