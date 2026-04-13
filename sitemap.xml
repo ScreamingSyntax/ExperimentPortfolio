@@ -2,8 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
       <loc>https://www.jhaaaryan.com.np/</loc>
-      <lastmod>2025-05-18</lastmod>
+      <lastmod>2026-04-12</lastmod>
       <changefreq>monthly</changefreq>
       <priority>1.0</priority>
+   </url>
+   <url>
+      <loc>https://www.jhaaaryan.com.np/#about</loc>
+      <lastmod>2026-04-12</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://www.jhaaaryan.com.np/#skills</loc>
+      <lastmod>2026-04-12</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://www.jhaaaryan.com.np/#experience</loc>
+      <lastmod>2026-04-12</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://www.jhaaaryan.com.np/#projects</loc>
+      <lastmod>2026-04-12</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://www.jhaaaryan.com.np/#education</loc>
+      <lastmod>2026-04-12</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://www.jhaaaryan.com.np/#resume</loc>
+      <lastmod>2026-04-12</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   <url>
+      <loc>https://www.jhaaaryan.com.np/#contact</loc>
+      <lastmod>2026-04-12</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.7</priority>
    </url>
 </urlset>

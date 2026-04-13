@@ -135,7 +135,42 @@ const About: React.FC = () => {
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
         >
-         
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 mb-16"
+          >
+            <div className="relative flex-shrink-0">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.7, ease: 'easeOut' }}
+                className="relative"
+              >
+                <div className="w-48 h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden border-2 border-primary-500/20 shadow-xl shadow-primary-500/10">
+                  <img
+                    src="/aaryan_photo.jpg"
+                    alt="Aaryan Jha"
+                    className="w-full h-full object-cover object-top"
+                    loading="eager"
+                  />
+                </div>
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-primary-500/20 via-accent-500/10 to-secondary-500/20 -z-10 blur-sm" />
+                <div className="absolute -bottom-3 -right-3 w-8 h-8 rounded-lg bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center text-white text-xs font-bold shadow-lg">
+                  <Code2 size={14} />
+                </div>
+              </motion.div>
+            </div>
+
+            <div className="text-center lg:text-left max-w-2xl">
+              <p className="text-lg md:text-xl text-gray-600 dark:text-dark-200 leading-relaxed">
+                Software Engineer at{' '}
+                <span className="text-primary-500 font-semibold">Vertex Special Technologies</span>{' '}
+                and Academic Tutor at{' '}
+                <span className="text-primary-500 font-semibold">Islington College</span>.
+                I mentor the next generation of developers by morning and build enterprise systems by evening.
+              </p>
+            </div>
+          </motion.div>
 
           <motion.div
             variants={itemVariants}

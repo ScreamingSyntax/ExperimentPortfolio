@@ -24,23 +24,37 @@ const experiences = [
       'Led international knowledge transfer sessions (US, Nepal, Pakistan)',
       'Mentored winning team (Team Syntax Error) at Hack4SafeFood Hackathon',
     ],
+    roles: undefined,
     skills: ['C#', '.NET Core', 'SQL Server', 'PostgreSQL', 'AWS S3', 'SignalR', 'Docker', 'RBAC', 'Microservices'],
     icon: <Briefcase className="w-5 h-5" />,
     color: 'from-primary-500 to-primary-600',
     dotColor: 'bg-primary-500',
   },
   {
-    title: 'Tutor & FYP Supervisor',
+    title: 'Islington College',
     company: 'Islington College',
-    location: 'Nepal',
+    location: 'Kathmandu, Nepal',
     period: 'Aug 2025 — Present',
-    type: 'Part-time',
-    description: [
-      'Deliver lectures on application development using .NET Core Web API, MAUI, and Blazor',
-      'Mentor final-year students throughout the project lifecycle',
-      'Provide code reviews and technical guidance to improve project quality',
-      'Evaluate student projects through assessments, documentation reviews, and viva',
-      'Conduct project defense sessions assessing technical depth and implementation',
+    type: 'Part-time · 9 mos',
+    description: [],
+    roles: [
+      {
+        title: 'Final Year Project Supervisor',
+        period: 'Jan 2026 — Present · 4 mos',
+        bullets: [
+          'Mentor final-year students throughout the project lifecycle',
+          'Provide code reviews and technical guidance to improve project quality',
+        ],
+      },
+      {
+        title: 'Academic Tutor',
+        period: 'Aug 2025 — Present · 9 mos',
+        bullets: [
+          'Deliver lectures on application development using .NET Core Web API, MAUI, and Blazor',
+          'Evaluate student projects through assessments, documentation reviews, and viva',
+          'Conduct project defense sessions assessing technical depth and implementation',
+        ],
+      },
     ],
     skills: ['C#', '.NET Core', 'MAUI', 'Blazor', 'Mentoring', 'Code Review'],
     icon: <GraduationCap className="w-5 h-5" />,
@@ -58,6 +72,7 @@ const experiences = [
       'Led IoT projects including "Remote Control Smart Dustbin"',
       'Showcased projects at 12 nationwide Futurama events, reaching 46,000+ students',
     ],
+    roles: undefined,
     skills: ['IoT', 'React', 'Django', 'Leadership', 'Pitching'],
     icon: <Laptop className="w-5 h-5" />,
     color: 'from-accent-500 to-accent-600',
@@ -68,6 +83,7 @@ const experiences = [
 function ExperienceCard({ exp, index }: { exp: typeof experiences[0]; index: number }) {
   const [expanded, setExpanded] = useState(false);
   const [cardRef, cardInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const hasRoles = exp.roles && exp.roles.length > 0;
   const displayItems = expanded ? exp.description : exp.description.slice(0, 3);
 
   return (
@@ -93,11 +109,10 @@ function ExperienceCard({ exp, index }: { exp: typeof experiences[0]; index: num
                   {exp.icon}
                 </div>
                 <h3 className="text-xl font-bold font-display text-gray-800 dark:text-white">
-                  {exp.title}
+                  {exp.company}
                 </h3>
               </div>
               <div className="flex items-center gap-3 text-sm">
-                <span className="text-primary-500 font-semibold">{exp.company}</span>
                 <span className="flex items-center gap-1 text-gray-400 dark:text-dark-300">
                   <MapPin size={12} /> {exp.location}
                 </span>
@@ -113,37 +128,72 @@ function ExperienceCard({ exp, index }: { exp: typeof experiences[0]; index: num
             </div>
           </div>
 
-          <ul className="space-y-2 mb-4">
-            <AnimatePresence>
-              {displayItems.map((item, i) => (
-                <motion.li
-                  key={i}
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-dark-200"
-                >
-                  <span className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 bg-gradient-to-r ${exp.color}`} />
-                  {item}
-                </motion.li>
+          {hasRoles ? (
+            <div className="space-y-5">
+              {exp.roles!.map((role, ri) => (
+                <div key={ri} className={ri > 0 ? 'pt-5 border-t border-gray-100 dark:border-dark-600' : ''}>
+                  <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                    <h4 className="text-base font-semibold text-gray-800 dark:text-white">
+                      {role.title}
+                    </h4>
+                    <span className="text-xs font-mono text-gray-400 dark:text-dark-300">
+                      {role.period}
+                    </span>
+                  </div>
+                  <ul className="space-y-2">
+                    {role.bullets.map((bullet, bi) => (
+                      <li
+                        key={bi}
+                        className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-dark-200"
+                      >
+                        <span className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 bg-gradient-to-r ${exp.color}`} />
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
-            </AnimatePresence>
-          </ul>
-
-          {exp.description.length > 3 && (
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className="flex items-center gap-1 text-sm text-primary-500 hover:text-primary-600 font-medium transition-colors mb-4"
-            >
-              {expanded ? (
-                <>Show less <ChevronUp size={14} /></>
-              ) : (
-                <>Show {exp.description.length - 3} more <ChevronDown size={14} /></>
+            </div>
+          ) : (
+            <>
+              {!hasRoles && exp.title !== exp.company && (
+                <h4 className="text-base font-semibold text-gray-800 dark:text-white mb-3">
+                  {exp.title}
+                </h4>
               )}
-            </button>
+              <ul className="space-y-2 mb-4">
+                <AnimatePresence>
+                  {displayItems.map((item, i) => (
+                    <motion.li
+                      key={i}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-dark-200"
+                    >
+                      <span className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 bg-gradient-to-r ${exp.color}`} />
+                      {item}
+                    </motion.li>
+                  ))}
+                </AnimatePresence>
+              </ul>
+
+              {exp.description.length > 3 && (
+                <button
+                  onClick={() => setExpanded(!expanded)}
+                  className="flex items-center gap-1 text-sm text-primary-500 hover:text-primary-600 font-medium transition-colors mb-4"
+                >
+                  {expanded ? (
+                    <>Show less <ChevronUp size={14} /></>
+                  ) : (
+                    <>Show {exp.description.length - 3} more <ChevronDown size={14} /></>
+                  )}
+                </button>
+              )}
+            </>
           )}
 
-          <div className="flex flex-wrap gap-2 pt-4 border-t border-gray-100 dark:border-dark-600">
+          <div className={`flex flex-wrap gap-2 pt-4 border-t border-gray-100 dark:border-dark-600 ${hasRoles ? 'mt-5' : ''}`}>
             {exp.skills.map((skill, i) => (
               <span
                 key={i}

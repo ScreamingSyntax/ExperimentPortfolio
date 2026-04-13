@@ -5,22 +5,26 @@ const socialLinks = [
     icon: <Github size={18} />,
     label: 'GitHub',
     href: 'https://github.com/ScreamingSyntax',
+    external: true,
   },
   {
     icon: <Linkedin size={18} />,
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/in/aaryanjha/',
+    external: true,
   },
   {
     icon: <Mail size={18} />,
     label: 'Email',
     href: 'mailto:whcloud91@gmail.com',
+    external: true,
   },
   {
     icon: <FileText size={18} />,
     label: 'Resume',
     href: '/resume.pdf',
-    download: true,
+    external: false,
+    isDownload: true,
   },
 ];
 
@@ -52,9 +56,9 @@ const Footer: React.FC = () => {
               <a
                 key={index}
                 href={link.href}
-                download={link.download}
-                target={link.download ? '_self' : '_blank'}
-                rel={!link.download ? 'noopener noreferrer' : undefined}
+                {...(link.isDownload ? { download: true } : {})}
+                target={link.external ? '_blank' : '_self'}
+                rel={link.external ? 'noopener noreferrer' : undefined}
                 className="group flex items-center gap-2 px-5 py-2.5 bg-dark-800 hover:bg-dark-700 rounded-xl border border-dark-700 hover:border-primary-700 transition-all duration-300"
               >
                 <span className="text-dark-300 group-hover:text-primary-400 transition-colors">

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import SectionHeading from './ui/SectionHeading';
-import { ExternalLink, Github, Layers, Shield, CreditCard, FileText, Smartphone, Cpu } from 'lucide-react';
+import { Lock, Layers, Shield, CreditCard, FileText, Smartphone, Cpu } from 'lucide-react';
 
 const projects = [
   {
@@ -12,6 +12,7 @@ const projects = [
     icon: <CreditCard className="w-5 h-5" />,
     color: 'from-primary-500 to-primary-600',
     highlights: ['Payment processing', 'Multi-tenant', 'Excel import/export'],
+    access: 'enterprise' as const,
   },
   {
     title: 'RBAC Authorization System',
@@ -20,6 +21,7 @@ const projects = [
     icon: <Shield className="w-5 h-5" />,
     color: 'from-secondary-500 to-secondary-600',
     highlights: ['325+ APIs', 'Device fingerprinting', 'API Gateway'],
+    access: 'enterprise' as const,
   },
   {
     title: 'OCR Document Processing',
@@ -28,6 +30,7 @@ const projects = [
     icon: <FileText className="w-5 h-5" />,
     color: 'from-accent-500 to-accent-600',
     highlights: ['Async workflows', 'Version control', 'Real-time updates'],
+    access: 'enterprise' as const,
   },
   {
     title: 'IoT Attendance System',
@@ -36,6 +39,7 @@ const projects = [
     icon: <Cpu className="w-5 h-5" />,
     color: 'from-orange-500 to-orange-600',
     highlights: ['IoT integration', 'Real-time tracking', 'Analytics'],
+    access: 'enterprise' as const,
   },
   {
     title: 'API Architecture Redesign',
@@ -44,6 +48,7 @@ const projects = [
     icon: <Layers className="w-5 h-5" />,
     color: 'from-violet-500 to-violet-600',
     highlights: ['Scalable design', 'Modular codebase', 'Docker deployment'],
+    access: 'enterprise' as const,
   },
   {
     title: 'Remote Control Smart Dustbin',
@@ -52,6 +57,7 @@ const projects = [
     icon: <Smartphone className="w-5 h-5" />,
     color: 'from-cyan-500 to-cyan-600',
     highlights: ['46,000+ reach', '12 events', 'Award-winning'],
+    access: 'showcase' as const,
   },
 ];
 
@@ -96,6 +102,17 @@ const Projects: React.FC = () => {
                   <div className={`p-2.5 rounded-xl bg-gradient-to-r ${project.color} text-white shadow-lg`}>
                     {project.icon}
                   </div>
+                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full ${
+                    project.access === 'enterprise'
+                      ? 'bg-amber-50 dark:bg-amber-900/15 text-amber-600 dark:text-amber-400 border border-amber-200/50 dark:border-amber-800/30'
+                      : 'bg-green-50 dark:bg-green-900/15 text-green-600 dark:text-green-400 border border-green-200/50 dark:border-green-800/30'
+                  }`}>
+                    {project.access === 'enterprise' ? (
+                      <><Lock size={10} /> Enterprise</>
+                    ) : (
+                      'Showcase'
+                    )}
+                  </span>
                 </div>
 
                 <h3 className="text-lg font-bold font-display mb-2 group-hover:text-primary-500 transition-colors">
