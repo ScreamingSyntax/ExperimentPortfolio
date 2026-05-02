@@ -25,7 +25,7 @@ const education = [
     affiliate: null,
     location: 'Dharan, Nepal',
     period: 'Apr 2020 — Apr 2022',
-    grade: 'Barely passed (but hey, still passed)',
+    grade: '',
     activities: null,
     highlights: [],
     color: 'from-secondary-500 to-secondary-600',
