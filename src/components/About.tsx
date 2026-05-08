@@ -171,7 +171,7 @@ const About: React.FC = () => {
               </p>
             </div>
           </motion.div>
-
+{/* 
           <motion.div
             variants={itemVariants}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16"
@@ -195,7 +195,7 @@ const About: React.FC = () => {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </motion.div> */}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
             {focusAreas.map((item, index) => (
