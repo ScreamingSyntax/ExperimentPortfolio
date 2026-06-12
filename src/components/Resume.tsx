@@ -18,7 +18,7 @@ const resumeJson = {
     {
       title: 'Software Engineer',
       company: 'Vertex Special Technologies',
-      period: 'Jul 2024 - Present',
+      period: 'June 2024 - Present',
       highlights: [
         'Multi-tenant architecture with 2FA & device fingerprinting',
         'RBAC across 325+ APIs',
