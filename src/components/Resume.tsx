@@ -10,9 +10,10 @@ const resumeJson = {
   name: 'Aaryan Jha',
   title: 'Software Engineer',
   technicalExpertise: [
-    'ASP.NET Core', 'ASP.NET MVC', 'Entity Framework Core', 'LINQ',
-    'REST APIs', 'JWT Authentication', '2FA & Device Fingerprinting',
-    'Clean Architecture', 'Flutter', 'SQL Server', 'PostgreSQL',
+    'ASP.NET Core', '.NET MVC', 'Entity Framework', 'LINQ', 'SignalR',
+    'Flutter', 'MAUI', 'Blazor', 'MS SQL', 'PostgreSQL', 'Redis',
+    'REST APIs', 'JWT', '2FA / MFA', 'Clean Architecture', 'Docker',
+    'xUnit', 'RabbitMQ', 'Stripe', 'IoT Systems',
   ],
   experience: [
     {
@@ -20,26 +21,27 @@ const resumeJson = {
       company: 'Vertex Special Technologies',
       period: 'June 2024 - Present',
       highlights: [
-        'Multi-tenant architecture with 2FA & device fingerprinting',
-        'RBAC across 325+ APIs',
-        'OCR processing with AWS S3 & SignalR',
+        'OCR-driven document processing with AWS S3 & SignalR',
+        'Multi-tenant architecture with MFA & device fingerprinting',
+        'RBAC securing 325+ APIs',
+        'Financial reporting & HRMS modules',
         'Secure API Gateway with Argon2',
       ],
     },
     {
       title: 'Tutor & FYP Supervisor',
       company: 'Islington College',
-      period: 'Aug 2025 - Present',
+      period: 'Aug 2025 - July 2026',
       highlights: [
-        'Lectures on .NET Core, MAUI, and Blazor',
-        'Final-year project mentoring & code reviews',
+        'Lectures on .NET Core Web API, MAUI, and Blazor',
+        'Final-year project mentoring, code reviews & defenses',
       ],
     },
   ],
   education: {
-    degree: 'BSc (Hons) Computing',
+    degree: 'BSc (Hons) Computing — 74% (Straight A)',
     institution: 'Itahari International College (London Metropolitan University)',
-    year: '2025',
+    year: '2022 – 2025',
   },
   awards: [
     'Triple A Scholarship (2024-2026)',
