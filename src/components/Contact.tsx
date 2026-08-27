@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import SectionHeading from './ui/SectionHeading';
-import { Send, Mail, AlertCircle, ArrowUpRight, MapPin, Clock } from 'lucide-react';
+import { Send, Mail, AlertCircle, ArrowUpRight, MapPin, Clock, Phone } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -143,6 +143,9 @@ const Contact: React.FC = () => {
               </div>
 
               <div className="space-y-3 mb-6">
+                <a href="tel:+9779745471881" className="flex items-center gap-2 text-sm text-gray-500 dark:text-dark-300 hover:text-primary-500 transition-colors">
+                  <Phone size={14} /> +977 9745471881
+                </a>
                 <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-dark-300">
                   <MapPin size={14} /> Nepal
                 </div>

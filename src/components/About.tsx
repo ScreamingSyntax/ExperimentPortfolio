@@ -1,22 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import SectionHeading from './ui/SectionHeading';
-import { Server, Database, Cpu, Smartphone, Award, Calendar, Code2, Users, Trophy, Globe, GraduationCap, Flame } from 'lucide-react';
-
-const stats = [
-  { icon: <Calendar size={20} />, value: 2, suffix: '+', label: 'Years Experience' },
-  { icon: <Code2 size={20} />, value: 10000, suffix: '+', label: 'APIs Designed' },
-  { icon: <Users size={20} />, value: 46000, suffix: '+', label: 'Students Reached' },
-  { icon: <Award size={20} />, value: 4, suffix: '', label: 'Awards & Honors' },
-];
+import { Server, Database, Cpu, Network, Code2, Trophy, Globe, GraduationCap, Flame } from 'lucide-react';
 
 const awards = [
   {
     icon: <GraduationCap className="w-5 h-5" />,
     title: 'Triple A Scholarship',
-    period: '2024 — 2026',
-    description: 'Awarded for excellence in academics, attendance, and discipline throughout the entire Bachelor\'s degree',
+    period: 'All academic years',
+    description: 'Awarded for excellence in academics, attendance, and discipline throughout the Bachelor\'s degree',
     color: 'text-yellow-500',
     bg: 'bg-yellow-500/10',
   },
@@ -49,63 +41,33 @@ const awards = [
 const focusAreas = [
   {
     icon: <Server className="w-6 h-6" />,
-    title: 'Backend Development',
-    description: 'Robust APIs & microservices with ASP.NET Core, Clean Architecture, and Entity Framework',
+    title: 'Backend Engineering',
+    description: 'Secure APIs and distributed microservices with C#, .NET, ASP.NET Core, and Entity Framework Core',
     color: 'from-primary-500 to-primary-600',
     iconBg: 'bg-primary-500/10 text-primary-500',
   },
   {
     icon: <Database className="w-6 h-6" />,
-    title: 'Database Design',
-    description: 'Scalable data systems with PostgreSQL, SQL Server, and advanced LINQ queries',
+    title: 'Data & Messaging',
+    description: 'Reliable data flows with SQL Server, PostgreSQL, Redis, Kafka, and RabbitMQ',
     color: 'from-secondary-500 to-secondary-600',
     iconBg: 'bg-secondary-500/10 text-secondary-500',
   },
   {
     icon: <Cpu className="w-6 h-6" />,
-    title: 'IoT Systems',
-    description: 'Smart attendance tracking, IoT integrations, and real-time monitoring solutions',
+    title: 'Platform Security',
+    description: 'Authentication and authorization with Keycloak, OAuth 2.0, OpenID Connect, JWT, and RBAC',
     color: 'from-accent-500 to-accent-600',
     iconBg: 'bg-accent-500/10 text-accent-500',
   },
   {
-    icon: <Smartphone className="w-6 h-6" />,
-    title: 'Mobile Development',
-    description: 'Beautiful cross-platform applications with Flutter, Dart, and Firebase',
+    icon: <Network className="w-6 h-6" />,
+    title: 'Distributed Systems',
+    description: 'Service communication with gRPC, YARP API Gateway, event-driven patterns, and Polly resilience',
     color: 'from-orange-500 to-orange-600',
     iconBg: 'bg-orange-500/10 text-orange-500',
   },
 ];
-
-function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const [counterRef, inView] = useInView({ triggerOnce: true, threshold: 0.5 });
-
-  useEffect(() => {
-    if (!inView) return;
-    const duration = 2000;
-    const steps = 60;
-    const increment = target / steps;
-    let current = 0;
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, duration / steps);
-    return () => clearInterval(timer);
-  }, [inView, target]);
-
-  return (
-    <span ref={counterRef}>
-      <span ref={ref}>{count.toLocaleString()}</span>{suffix}
-    </span>
-  );
-}
 
 const About: React.FC = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -163,40 +125,13 @@ const About: React.FC = () => {
 
             <div className="text-center lg:text-left max-w-2xl">
               <p className="text-lg md:text-xl text-gray-600 dark:text-dark-200 leading-relaxed">
-                Software Engineer at{' '}
-                <span className="text-primary-500 font-semibold">Vertex Special Technologies</span>{' '}
-                and Academic Tutor at{' '}
-                <span className="text-primary-500 font-semibold">Islington College</span>.
-                I mentor the next generation of developers by morning and build enterprise systems by evening.
+                Mid-Level Backend Software Engineer at{' '}
+                <span className="text-primary-500 font-semibold">Ureka Systems</span>, building distributed
+                fintech services with .NET, Kafka, RabbitMQ, Redis, Keycloak, gRPC, and YARP. I bring 2+ years
+                of experience delivering secure enterprise platforms, multi-tenant systems, and production APIs.
               </p>
             </div>
           </motion.div>
-{/* 
-          <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16"
-          >
-            {stats.map((stat, i) => (
-              <div
-                key={i}
-                className="relative group text-center p-6 rounded-2xl bg-white dark:bg-dark-700 border border-gray-100 dark:border-dark-600 hover:border-primary-200 dark:hover:border-primary-800 transition-all duration-500 hover:-translate-y-1 hover:shadow-lg"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-accent-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative">
-                  <div className="flex justify-center mb-3 text-primary-500">
-                    {stat.icon}
-                  </div>
-                  <div className="text-3xl md:text-4xl font-bold font-display text-gradient mb-1">
-                    <AnimatedCounter target={stat.value} suffix={stat.suffix} />
-                  </div>
-                  <div className="text-sm text-gray-500 dark:text-dark-300 font-medium">
-                    {stat.label}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </motion.div> */}
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
             {focusAreas.map((item, index) => (
               <motion.div

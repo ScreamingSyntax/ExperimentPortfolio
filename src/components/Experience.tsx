@@ -6,10 +6,30 @@ import { Briefcase, GraduationCap, Laptop, ChevronDown, ChevronUp, MapPin } from
 
 const experiences = [
   {
+    title: 'Mid-Level Software Engineer',
+    company: 'Ureka Systems Pvt. Ltd.',
+    location: 'Kathmandu, Nepal',
+    period: 'Jul 2026 — Present',
+    type: 'Full-time · On-site',
+    description: [
+      'Contribute to an enterprise fintech platform built on .NET and a distributed microservices architecture',
+      'Develop event-driven services with Kafka and Rebus messaging over RabbitMQ, using Redis for distributed caching',
+      'Implement authentication and authorization with Keycloak, JWT, and role-based access control',
+      'Build gRPC service-to-service communication and manage API routing through YARP API Gateway',
+      'Apply Polly resilience patterns and create shared libraries used across multiple microservices',
+      'Use SonarQube to resolve code smells and maintain quality across .NET services',
+    ],
+    roles: undefined,
+    skills: ['C#', '.NET', 'Microservices', 'Kafka', 'RabbitMQ', 'Redis', 'Keycloak', 'gRPC', 'YARP', 'Polly'],
+    icon: <Briefcase className="w-5 h-5" />,
+    color: 'from-primary-500 to-primary-600',
+    dotColor: 'bg-primary-500',
+  },
+  {
     title: 'Software Engineer',
     company: 'Vertex Special Technologies',
     location: 'Lalitpur, Nepal',
-    period: 'Jun 2024 — Present',
+    period: 'Jun 2024 — Jul 2026',
     type: 'Full-time · On-site',
     description: [
       'Built an OCR-driven financial document processing platform with AWS S3, SignalR, webhooks, and version-controlled workflows',
@@ -31,13 +51,13 @@ const experiences = [
     title: 'Tutor & Final Year Project Supervisor',
     company: 'Islington College',
     location: 'Kathmandu, Nepal',
-    period: 'Aug 2025 — Jul 2026',
+    period: 'Aug 2025 — Aug 2026',
     type: 'On-site',
     description: [],
     roles: [
       {
         title: 'Final Year Project Supervisor',
-        period: 'Aug 2025 — Jul 2026',
+        period: 'Aug 2025 — Aug 2026',
         bullets: [
           'Mentored and evaluated final-year projects with technical guidance and code reviews',
           'Assessed project quality through documentation reviews, vivas, and defense sessions',
@@ -45,7 +65,7 @@ const experiences = [
       },
       {
         title: 'Academic Tutor',
-        period: 'Aug 2025 — Jul 2026',
+        period: 'Aug 2025 — Aug 2026',
         bullets: [
           'Delivered lectures and practical training in .NET Core Web API, MAUI, and Blazor',
         ],

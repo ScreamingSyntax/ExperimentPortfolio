@@ -3,23 +3,35 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import SectionHeading from './ui/SectionHeading';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Copy, Check, Download, Code2, Eye } from 'lucide-react';
 
 const resumeJson = {
   name: 'Aaryan Jha',
-  title: 'Software Engineer',
+  title: 'Mid-Level Backend Software Engineer',
   technicalExpertise: [
-    'ASP.NET Core', '.NET MVC', 'Entity Framework', 'LINQ', 'SignalR',
-    'Flutter', 'MAUI', 'Blazor', 'MS SQL', 'PostgreSQL', 'Redis',
-    'REST APIs', 'JWT', '2FA / MFA', 'Clean Architecture', 'Docker',
-    'xUnit', 'RabbitMQ', 'Stripe', 'IoT Systems',
+    'C#', '.NET', 'ASP.NET Core', 'Entity Framework Core', 'LINQ', 'SignalR',
+    'Microservices', 'Event-Driven Architecture', 'REST APIs', 'gRPC', 'YARP', 'Polly',
+    'SQL Server', 'PostgreSQL', 'Redis', 'Kafka', 'RabbitMQ',
+    'Keycloak', 'OAuth 2.0', 'OpenID Connect', 'JWT', 'RBAC', 'MFA / 2FA',
+    'Docker', 'SonarQube', 'xUnit', 'Moq', 'Shouldly', 'AWS S3',
   ],
   experience: [
     {
+      title: 'Mid-Level Software Engineer',
+      company: 'Ureka Systems Pvt. Ltd.',
+      period: 'July 2026 - Present',
+      highlights: [
+        'Distributed .NET microservices for an enterprise fintech platform',
+        'Kafka and Rebus messaging over RabbitMQ with Redis caching',
+        'Keycloak authentication, gRPC communication, and YARP API routing',
+        'Polly resilience patterns, shared libraries, and SonarQube quality checks',
+      ],
+    },
+    {
       title: 'Software Engineer',
       company: 'Vertex Special Technologies',
-      period: 'June 2024 - Present',
+      period: 'June 2024 - July 2026',
       highlights: [
         'OCR-driven document processing with AWS S3 & SignalR',
         'Multi-tenant architecture with MFA & device fingerprinting',
@@ -31,7 +43,7 @@ const resumeJson = {
     {
       title: 'Tutor & FYP Supervisor',
       company: 'Islington College',
-      period: 'Aug 2025 - July 2026',
+      period: 'Aug 2025 - Aug 2026',
       highlights: [
         'Lectures on .NET Core Web API, MAUI, and Blazor',
         'Final-year project mentoring, code reviews & defenses',
@@ -44,17 +56,20 @@ const resumeJson = {
     year: '2022 – 2025',
   },
   awards: [
-    'Triple A Scholarship (2024-2026)',
+    'Triple A Scholarship (all academic years)',
     '30-Second Pitch Challenge - 3rd Place (Thailand, 2024)',
     'International Exposure Program (Thailand, 2024)',
     'Hack4SafeFood Mentor - Winning Team (2025)',
   ],
   contact: {
+    phone: '+977 9745471881',
     email: 'whcloud91@gmail.com',
     github: 'github.com/screamingsyntax',
     linkedin: 'linkedin.com/in/aaryanjha',
     portfolio: 'aaryanj.com.np',
   },
+  certification: 'Design Patterns — University of Alberta (Coursera)',
+  languages: ['English (Fluent)', 'Nepali (Native)', 'Hindi (Conversational)'],
 };
 
 type ViewMode = 'json' | 'visual';
@@ -192,6 +207,16 @@ const Resume: React.FC = () => {
                       </li>
                     ))}
                   </ul>
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-primary-500 mb-3">Certification</h4>
+                  <p className="text-sm text-gray-600 dark:text-dark-200">{resumeJson.certification}</p>
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-primary-500 mb-3">Languages</h4>
+                  <p className="text-sm text-gray-600 dark:text-dark-200">{resumeJson.languages.join(' · ')}</p>
                 </div>
               </div>
             )}

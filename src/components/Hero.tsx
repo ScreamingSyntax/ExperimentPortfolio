@@ -4,10 +4,10 @@ import HeroCanvas from './three/HeroCanvas';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 
 const roles = [
-  'Software Engineer',
-  '.NET Core Expert',
-  'Backend Architect',
-  'Flutter Developer',
+  'Mid-Level Backend Engineer',
+  '.NET & ASP.NET Core Developer',
+  'Microservices Engineer',
+  'Event-Driven Systems Builder',
   'Tech Mentor',
 ];
 
@@ -85,9 +85,9 @@ const Hero: React.FC = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 1.0 }}
               >
-                Building scalable, secure, and performant applications with
-                <span className="text-primary-300 font-medium"> .NET Core</span>,
-                <span className="text-accent-300 font-medium"> Flutter</span>, and modern architectures.
+                Building secure fintech and enterprise platforms with
+                <span className="text-primary-300 font-medium"> .NET</span>,
+                <span className="text-accent-300 font-medium"> microservices</span>, and event-driven architecture.
               </motion.p>
 
               <motion.div

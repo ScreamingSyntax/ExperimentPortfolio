@@ -2,9 +2,18 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import SectionHeading from './ui/SectionHeading';
-import { Lock, Layers, Shield, CreditCard, FileText, Smartphone, Cpu } from 'lucide-react';
+import { Lock, Layers, Shield, CreditCard, FileText, Smartphone, Cpu, Network } from 'lucide-react';
 
 const projects = [
+  {
+    title: 'Distributed Fintech Platform',
+    description: 'Enterprise fintech services built with distributed .NET microservices, event-driven messaging, secure identity, and resilient service communication.',
+    tags: ['.NET', 'Kafka', 'RabbitMQ', 'Redis', 'Keycloak', 'gRPC', 'YARP'],
+    icon: <Network className="w-5 h-5" />,
+    color: 'from-emerald-500 to-cyan-600',
+    highlights: ['Event-driven services', 'Distributed caching', 'Resilient communication'],
+    access: 'enterprise' as const,
+  },
   {
     title: 'Enterprise Accounting Module',
     description: 'Full payment system with multi-tenant architecture, real-time tracking, and seamless transaction processing for enterprise clients.',

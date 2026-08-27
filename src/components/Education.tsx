@@ -1,17 +1,16 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import SectionHeading from './ui/SectionHeading';
-import { GraduationCap, MapPin, Calendar, Award, Users } from 'lucide-react';
+import { GraduationCap, MapPin, Calendar, Award, ExternalLink } from 'lucide-react';
 
 const education = [
   {
-    degree: "Bachelor's Degree, Information Technology",
+    degree: 'BSc (Hons) Computing',
     institution: 'London Metropolitan University',
     affiliate: 'Itahari International College',
     location: 'Nepal',
-    period: '2022 — 2024',
-    grade: 'First Class Honors (Grade A)',
-    activities: 'Member of Coders and Research Club',
+    period: '2022 — 2025',
+    grade: '74% · Straight A',
     highlights: [
       'Triple A Scholarship recipient for all years',
       'Selected for International Exposure Program in Thailand (1 of 4 students)',
@@ -26,7 +25,6 @@ const education = [
     location: 'Dharan, Nepal',
     period: 'Apr 2020 — Apr 2022',
     grade: '',
-    activities: null,
     highlights: [],
     color: 'from-secondary-500 to-secondary-600',
   },
@@ -97,11 +95,6 @@ const Education: React.FC = () => {
                       <span className="font-medium text-gray-700 dark:text-dark-100">{edu.grade}</span>
                     </span>
                   )}
-                  {edu.activities && (
-                    <span className="flex items-center gap-1.5">
-                      <Users size={13} /> {edu.activities}
-                    </span>
-                  )}
                 </div>
 
                 {edu.highlights.length > 0 && (
@@ -117,6 +110,23 @@ const Education: React.FC = () => {
               </div>
             </motion.div>
           ))}
+
+          <motion.a
+            href="https://www.coursera.org/account/accomplishments/verify/SVKZVN55Y84D"
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: education.length * 0.2 }}
+            className="group flex items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-dark-700 border border-gray-100 dark:border-dark-600 hover:border-primary-300 dark:hover:border-primary-700 transition-all duration-300"
+          >
+            <div>
+              <p className="text-xs font-mono uppercase tracking-wider text-primary-500 mb-1">Certification</p>
+              <h3 className="font-bold font-display">Design Patterns</h3>
+              <p className="text-sm text-gray-500 dark:text-dark-300">University of Alberta · Coursera</p>
+            </div>
+            <ExternalLink size={18} className="text-gray-400 group-hover:text-primary-500 transition-colors" />
+          </motion.a>
         </motion.div>
       </div>
     </section>

@@ -18,14 +18,12 @@ const skillGroups: SkillGroup[] = [
     border: 'border-primary-500/20 hover:border-primary-500/40',
     skills: [
       'ASP.NET Core',
-      '.NET MVC',
-      'Entity Framework',
+      'ASP.NET Core Web API',
+      'Entity Framework Core',
       'LINQ',
       'SignalR',
       'EPPlus',
-      'Flutter',
-      'MAUI',
-      'Blazor',
+      'gRPC',
     ],
   },
   {
@@ -33,7 +31,7 @@ const skillGroups: SkillGroup[] = [
     color: 'text-secondary-500',
     bg: 'bg-secondary-500/10',
     border: 'border-secondary-500/20 hover:border-secondary-500/40',
-    skills: ['MS SQL', 'PostgreSQL', 'Redis'],
+    skills: ['SQL Server', 'PostgreSQL', 'Redis', 'Kafka', 'RabbitMQ'],
   },
   {
     title: 'Web & APIs',
@@ -42,12 +40,13 @@ const skillGroups: SkillGroup[] = [
     border: 'border-accent-500/20 hover:border-accent-500/40',
     skills: [
       'REST APIs',
+      'YARP API Gateway',
       'JWT',
       '2FA / MFA',
       'Device Fingerprinting',
-      'JSON',
-      'CSV',
-      'Excel',
+      'OAuth 2.0',
+      'OpenID Connect',
+      'Keycloak',
     ],
   },
   {
@@ -63,6 +62,7 @@ const skillGroups: SkillGroup[] = [
       'IIS',
       'RabbitMQ',
       'AWS S3',
+      'SonarQube',
     ],
   },
   {
@@ -70,7 +70,7 @@ const skillGroups: SkillGroup[] = [
     color: 'text-violet-500',
     bg: 'bg-violet-500/10',
     border: 'border-violet-500/20 hover:border-violet-500/40',
-    skills: ['Clean Architecture', 'Multi-tenant', 'RBAC', 'Bloc'],
+    skills: ['Microservices', 'Clean Architecture', 'Event-Driven Architecture', 'Multi-tenant', 'RBAC', 'Polly'],
   },
   {
     title: 'Testing',
@@ -91,7 +91,7 @@ const skillGroups: SkillGroup[] = [
     color: 'text-rose-500',
     bg: 'bg-rose-500/10',
     border: 'border-rose-500/20 hover:border-rose-500/40',
-    skills: ['Stripe Integration', 'IoT Systems', 'C#'],
+    skills: ['Flutter', 'BLoC', 'Stripe Integration', 'EPPlus', 'IoT & Biometric Systems'],
   },
 ];
 
