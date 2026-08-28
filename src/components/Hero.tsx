@@ -122,10 +122,10 @@ const Hero: React.FC = () => {
               <pre className="overflow-x-auto text-2xs leading-relaxed">
                 <code>
                   <span className="tok-key">const</span> engineer = {'{'}
-                  {'\n  '}stack: <span className="tok-str">'.NET'</span>,
-                  {'\n  '}scale: <span className="tok-str">'325+ APIs'</span>,
-                  {'\n  '}msg: <span className="tok-str">'Kafka'</span>,
-                  {'\n  '}based: <span className="tok-str">'Kathmandu'</span>,
+                  {'\n  '}writes: <span className="tok-str">'C#'</span>,
+                  {'\n  '}reads: <span className="tok-str">'stack traces'</span>,
+                  {'\n  '}deploys: <span className="tok-str">'on Fridays'</span>,
+                  {'\n  '}regrets: <span className="tok-key">null</span>,
                   {'\n'}
                   {'}'}
                 </code>
