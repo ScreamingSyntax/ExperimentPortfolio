@@ -12,11 +12,16 @@ import CustomCursor from './components/ui/CustomCursor';
 import ScrollToTop from './components/ui/ScrollToTop';
 import Loader from './components/ui/Loader';
 
+const THEME_KEY = 'theme-v2';
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  // Versioned key: the previous design stored 'dark' here and defaulted to it,
+  // so returning visitors would otherwise keep landing in the old preference
+  // rather than the light default this design is built around.
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') || 'light';
+      return localStorage.getItem(THEME_KEY) || 'light';
     }
     return 'light';
   });
@@ -28,7 +33,7 @@ function App() {
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem('theme', theme);
+    localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
 
   const toggleTheme = () => {
