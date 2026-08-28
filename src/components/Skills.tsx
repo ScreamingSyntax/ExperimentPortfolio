@@ -1,149 +1,146 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { useState } from 'react';
+import { Server, Database, ShieldCheck, Network, ChevronDown } from 'lucide-react';
 import SectionHeading from './ui/SectionHeading';
+import Reveal from './ui/Reveal';
 
-type SkillGroup = {
-  title: string;
-  color: string;
-  bg: string;
-  border: string;
-  skills: string[];
-};
+/** The six that lead. Everything else lives in the marquee or the full list. */
+const headline = ['C#', '.NET', 'Kafka', 'PostgreSQL', 'Docker', 'Redis'];
 
-const skillGroups: SkillGroup[] = [
+/** The belt. Long enough to fill the strip twice without obvious repetition. */
+const belt = [
+  'ASP.NET Core', 'Entity Framework Core', 'Microservices', 'Event-Driven Architecture',
+  'gRPC', 'YARP', 'Polly', 'RabbitMQ', 'SignalR', 'Keycloak', 'OAuth 2.0', 'JWT',
+  'RBAC', 'MFA / 2FA', 'SQL Server', 'AWS S3', 'SonarQube', 'xUnit', 'Clean Architecture',
+];
+
+const focusAreas = [
   {
-    title: 'Frameworks & Libraries',
-    color: 'text-primary-500',
-    bg: 'bg-primary-500/10',
-    border: 'border-primary-500/20 hover:border-primary-500/40',
-    skills: [
-      'ASP.NET Core',
-      'ASP.NET Core Web API',
-      'Entity Framework Core',
-      'LINQ',
-      'SignalR',
-      'EPPlus',
-      'gRPC',
-    ],
+    icon: Server,
+    title: 'Backend Engineering',
+    body: 'Secure APIs and distributed microservices with C#, .NET, ASP.NET Core, and EF Core.',
+    fill: 'bg-lime text-on-lime',
   },
   {
-    title: 'Databases',
-    color: 'text-secondary-500',
-    bg: 'bg-secondary-500/10',
-    border: 'border-secondary-500/20 hover:border-secondary-500/40',
-    skills: ['SQL Server', 'PostgreSQL', 'Redis', 'Kafka', 'RabbitMQ'],
+    icon: Database,
+    title: 'Data & Messaging',
+    body: 'Reliable data flows with SQL Server, PostgreSQL, Redis, Kafka, and RabbitMQ.',
+    fill: 'bg-paper text-ink',
   },
   {
-    title: 'Web & APIs',
-    color: 'text-accent-500',
-    bg: 'bg-accent-500/10',
-    border: 'border-accent-500/20 hover:border-accent-500/40',
-    skills: [
-      'REST APIs',
-      'YARP API Gateway',
-      'JWT',
-      '2FA / MFA',
-      'Device Fingerprinting',
-      'OAuth 2.0',
-      'OpenID Connect',
-      'Keycloak',
-    ],
+    icon: ShieldCheck,
+    title: 'Platform Security',
+    body: 'Auth with Keycloak, OAuth 2.0, OpenID Connect, JWT, and dynamic RBAC.',
+    fill: 'bg-paper text-ink',
   },
   {
-    title: 'Tools & Platforms',
-    color: 'text-cyan-500',
-    bg: 'bg-cyan-500/10',
-    border: 'border-cyan-500/20 hover:border-cyan-500/40',
-    skills: [
-      'Git',
-      'GitHub',
-      'Bitbucket',
-      'Docker',
-      'IIS',
-      'RabbitMQ',
-      'AWS S3',
-      'SonarQube',
-    ],
-  },
-  {
-    title: 'Architecture & Patterns',
-    color: 'text-violet-500',
-    bg: 'bg-violet-500/10',
-    border: 'border-violet-500/20 hover:border-violet-500/40',
-    skills: ['Microservices', 'Clean Architecture', 'Event-Driven Architecture', 'Multi-tenant', 'RBAC', 'Polly'],
-  },
-  {
-    title: 'Testing',
-    color: 'text-orange-500',
-    bg: 'bg-orange-500/10',
-    border: 'border-orange-500/20 hover:border-orange-500/40',
-    skills: ['xUnit', 'Moq', 'Shouldly', 'EF Core InMemory'],
-  },
-  {
-    title: 'Methodologies',
-    color: 'text-emerald-500',
-    bg: 'bg-emerald-500/10',
-    border: 'border-emerald-500/20 hover:border-emerald-500/40',
-    skills: ['Agile', 'Scrum', 'Jira', 'Trello'],
-  },
-  {
-    title: 'Other',
-    color: 'text-rose-500',
-    bg: 'bg-rose-500/10',
-    border: 'border-rose-500/20 hover:border-rose-500/40',
-    skills: ['Flutter', 'BLoC', 'Stripe Integration', 'EPPlus', 'IoT & Biometric Systems'],
+    icon: Network,
+    title: 'Distributed Systems',
+    body: 'gRPC, YARP API Gateway, event-driven patterns, and Polly resilience.',
+    fill: 'bg-violet text-on-violet',
   },
 ];
 
+const skillGroups = [
+  {
+    title: 'Frameworks & Libraries',
+    skills: ['ASP.NET Core', 'ASP.NET Core Web API', 'Entity Framework Core', 'LINQ', 'SignalR', 'EPPlus', 'gRPC'],
+  },
+  { title: 'Databases & Messaging', skills: ['SQL Server', 'PostgreSQL', 'Redis', 'Kafka', 'RabbitMQ'] },
+  {
+    title: 'Web & APIs',
+    skills: ['REST APIs', 'YARP API Gateway', 'JWT', '2FA / MFA', 'Device Fingerprinting', 'OAuth 2.0', 'OpenID Connect', 'Keycloak'],
+  },
+  { title: 'Tools & Platforms', skills: ['Git', 'GitHub', 'Bitbucket', 'Docker', 'IIS', 'AWS S3', 'SonarQube'] },
+  {
+    title: 'Architecture & Patterns',
+    skills: ['Microservices', 'Clean Architecture', 'Event-Driven Architecture', 'Multi-tenant', 'RBAC', 'Polly'],
+  },
+  { title: 'Testing', skills: ['xUnit', 'Moq', 'Shouldly', 'EF Core InMemory'] },
+  { title: 'Methodologies', skills: ['Agile', 'Scrum', 'Jira', 'Trello'] },
+  { title: 'Other', skills: ['Flutter', 'BLoC', 'Stripe Integration', 'IoT & Biometric Systems'] },
+];
+
 const Skills: React.FC = () => {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [expanded, setExpanded] = useState(false);
 
   return (
-    <section id="skills" className="section relative">
-      <div className="container relative z-10">
-        <SectionHeading
-          title="Technical Skills"
-          subtitle="Technologies and tools I use to build great software"
-          label="My Stack"
-        />
-
-        <motion.div
-          ref={ref}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
-          }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto"
-        >
-          {skillGroups.map((group) => (
-            <motion.div
-              key={group.title}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' } },
-              }}
-              className="p-6 rounded-2xl bg-white dark:bg-dark-700 border border-gray-100 dark:border-dark-600"
-            >
-              <h3 className={`text-sm font-semibold uppercase tracking-wider font-mono mb-4 ${group.color}`}>
-                {group.title}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {group.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors duration-200 ${group.bg} ${group.color} ${group.border}`}
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+    <>
+      {/* The belt runs full-bleed, outside the container. */}
+      <div className="marquee my-4" aria-hidden="true">
+        {[0, 1].map((i) => (
+          <div key={i} className="marquee__track">
+            {belt.map((item) => (
+              <span key={item} className="px-5">
+                {item} <span className="opacity-40">·</span>
+              </span>
+            ))}
+          </div>
+        ))}
       </div>
-    </section>
+
+      <section id="skills" className="container py-12 sm:py-16">
+        <SectionHeading num="01" title="Skills" subtitle="What I reach for, and what I build with it" />
+
+        {/* Six headline technologies */}
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          {headline.map((name, i) => (
+            <Reveal
+              key={name}
+              index={i}
+              className="no-grid flex items-center justify-center border-3 border-ink bg-paper p-5 text-center font-display text-base shadow-hard-sm"
+            >
+              {name}
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Four focus areas */}
+        <div className="mt-8 grid gap-6 sm:grid-cols-2">
+          {focusAreas.map(({ icon: Icon, title, body, fill }, i) => (
+            <Reveal
+              key={title}
+              index={i}
+              className={`cell ${fill}`}
+            >
+              <Icon size={26} strokeWidth={2.5} />
+              <h3 className="mb-2 mt-4 text-lg">{title}</h3>
+              <p className="measure text-2xs">{body}</p>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Full stack list, folded away by default */}
+        <button
+          type="button"
+          onClick={() => setExpanded(!expanded)}
+          aria-expanded={expanded}
+          className="btn btn-ghost mt-8"
+        >
+          {expanded ? 'Hide full stack' : 'See the full stack'}
+          <ChevronDown
+            size={18}
+            className={`transition-transform duration-150 ${expanded ? 'rotate-180' : ''}`}
+          />
+        </button>
+
+        {expanded && (
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            {skillGroups.map((group) => (
+              <div key={group.title} className="cell-flat">
+                <h3 className="label mb-3 text-violet">{group.title}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {group.skills.map((skill) => (
+                    <span key={skill} className="tag">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    </>
   );
 };
 

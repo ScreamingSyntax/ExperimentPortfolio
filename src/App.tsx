@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import About from './components/About';
 import Skills from './components/Skills';
+import Certifications from './components/Certifications';
 import Experience from './components/Experience';
-import Projects from './components/Projects';
 import Education from './components/Education';
 import Resume from './components/Resume';
 import Contact from './components/Contact';
@@ -18,22 +16,18 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') || 'dark';
+      return localStorage.getItem('theme') || 'light';
     }
-    return 'dark';
+    return 'light';
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2200);
+    const timer = setTimeout(() => setIsLoading(false), 1200);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.toggle('dark', theme === 'dark');
     localStorage.setItem('theme', theme);
   }, [theme]);
 
@@ -43,28 +37,24 @@ function App() {
 
   return (
     <div className="custom-cursor">
-      <AnimatePresence mode="wait">
-        {isLoading ? (
-          <Loader key="loader" />
-        ) : (
-          <>
-            <CustomCursor />
-            <Header theme={theme} toggleTheme={toggleTheme} />
-            <main>
-              <Hero />
-              <About />
-              <Skills />
-              <Experience />
-              <Projects />
-              <Education />
-              <Resume />
-              <Contact />
-            </main>
-            <Footer />
-            <ScrollToTop />
-          </>
-        )}
-      </AnimatePresence>
+      {/* The loader is an overlay, never a gate. The page below is mounted and
+          readable from the first paint, so a backgrounded tab (where animation
+          frames are throttled) can never strand the visitor on a splash. */}
+      <Loader done={!isLoading} />
+
+      <CustomCursor />
+      <Header theme={theme} toggleTheme={toggleTheme} />
+      <main>
+        <Hero />
+        <Skills />
+        <Certifications />
+        <Experience />
+        <Education />
+        <Resume />
+        <Contact />
+      </main>
+      <Footer />
+      <ScrollToTop />
     </div>
   );
 }

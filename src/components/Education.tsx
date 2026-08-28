@@ -1,7 +1,6 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { GraduationCap, Trophy, Globe, Flame } from 'lucide-react';
 import SectionHeading from './ui/SectionHeading';
-import { GraduationCap, MapPin, Calendar, Award, ExternalLink } from 'lucide-react';
+import Reveal from './ui/Reveal';
 
 const education = [
   {
@@ -10,124 +9,114 @@ const education = [
     affiliate: 'Itahari International College',
     location: 'Nepal',
     period: '2022 — 2025',
-    grade: '74% · Straight A',
+    grade: 'Straight A',
     highlights: [
       'Triple A Scholarship recipient for all years',
-      'Selected for International Exposure Program in Thailand (1 of 4 students)',
-      '3rd Place at 30-Second Pitch Challenge, DesignThinkers Academy Thailand',
+      'Selected for the International Exposure Program in Thailand — 1 of 4 students',
+      '3rd Place, 30-Second Pitch Challenge, DesignThinkers Academy Thailand',
     ],
-    color: 'from-primary-500 to-primary-600',
   },
   {
     degree: 'High School Diploma, Computer Science',
     institution: 'Delhi Public School',
     affiliate: null,
     location: 'Dharan, Nepal',
-    period: 'Apr 2020 — Apr 2022',
+    period: '2020 — 2022',
     grade: '',
-    highlights: [],
-    color: 'from-secondary-500 to-secondary-600',
+    highlights: [
+      'Barely passed. But passed.',
+      'Used to fail at coding here. Now I do it for a living.',
+    ],
+  },
+];
+
+/** Merged in from the old About section — awards belong next to education. */
+const awards = [
+  {
+    icon: GraduationCap,
+    title: 'Triple A Scholarship',
+    period: 'All academic years',
+    description: 'Awarded for academics, attendance, and discipline across the full Bachelor\'s degree',
+  },
+  {
+    icon: Trophy,
+    title: '30-Second Pitch Challenge — 3rd',
+    period: '2024',
+    description: 'Competed against international participants at DesignThinkers Academy, Thailand',
+  },
+  {
+    icon: Globe,
+    title: 'International Exposure Program',
+    period: '2024 · Thailand',
+    description: 'Selected as 1 of 4 students from the college for an academic and innovation program',
+  },
+  {
+    icon: Flame,
+    title: 'Hack4SafeFood Mentor',
+    period: '2025',
+    description: 'Mentored Team Syntax Error to 1st place on architecture, pitching, and time management',
   },
 ];
 
 const Education: React.FC = () => {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section id="education" className="section">
-      <div className="container">
-        <SectionHeading
-          title="Education"
-          subtitle="The academic foundation behind the engineering"
-          label="Learning"
-        />
+    <section id="education" className="container py-12 sm:py-16">
+      <SectionHeading num="04" title="Education & Awards" subtitle="The foundation, and what came out of it" />
 
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto mt-12 space-y-6"
-        >
-          {education.map((edu, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="group relative bg-white dark:bg-dark-700 rounded-2xl border border-gray-100 dark:border-dark-600 hover:border-primary-200 dark:hover:border-primary-700 transition-all duration-500 overflow-hidden hover:shadow-xl"
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Education */}
+        <div className="flex flex-col gap-6">
+          {education.map((edu, i) => (
+            <Reveal
+              key={edu.degree}
+              index={i}
+              className="no-grid border-3 border-ink bg-paper shadow-hard"
             >
-              <div className={`h-1 bg-gradient-to-r ${edu.color}`} />
-
-              <div className="p-6 md:p-8">
-                <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
-                  <div>
-                    <div className="flex items-center gap-2.5 mb-1.5">
-                      <div className={`p-1.5 rounded-lg bg-gradient-to-r ${edu.color} text-white`}>
-                        <GraduationCap className="w-5 h-5" />
-                      </div>
-                      <h3 className="text-xl font-bold font-display text-gray-800 dark:text-white">
-                        {edu.institution}
-                      </h3>
-                    </div>
-                    {edu.affiliate && (
-                      <p className="text-sm text-gray-500 dark:text-dark-300 ml-10">
-                        via {edu.affiliate}
-                      </p>
-                    )}
-                  </div>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-300 rounded-full">
-                    <Calendar size={11} /> {edu.period}
-                  </span>
+              <div className="flex flex-wrap items-start justify-between gap-3 border-b-3 border-ink bg-cream p-5">
+                <div>
+                  <h3 className="text-lg">{edu.degree}</h3>
+                  <p className="mt-1.5 text-2xs">{edu.institution}</p>
+                  {edu.affiliate && <p className="eyebrow mt-1">via {edu.affiliate}</p>}
                 </div>
+                <span className="tag tabular shrink-0">{edu.period}</span>
+              </div>
 
-                <p className="text-base font-medium text-gray-700 dark:text-dark-100 mb-3 ml-10">
-                  {edu.degree}
-                </p>
-
-                <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-500 dark:text-dark-300 mb-4 ml-10">
-                  <span className="flex items-center gap-1.5">
-                    <MapPin size={13} /> {edu.location}
-                  </span>
-                  {edu.grade && (
-                    <span className="flex items-center gap-1.5">
-                      <Award size={13} className="text-yellow-500" />
-                      <span className="font-medium text-gray-700 dark:text-dark-100">{edu.grade}</span>
-                    </span>
-                  )}
+              <div className="flex flex-col gap-3 p-5">
+                <div className="flex flex-wrap items-center gap-2">
+                  {edu.grade && <span className="tag tag-fill">{edu.grade}</span>}
+                  <span className="eyebrow">{edu.location}</span>
                 </div>
-
                 {edu.highlights.length > 0 && (
-                  <ul className="space-y-2 ml-10">
-                    {edu.highlights.map((h, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-dark-200">
-                        <span className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 bg-gradient-to-r ${edu.color}`} />
+                  <ul className="flex flex-col gap-2">
+                    {edu.highlights.map((h) => (
+                      <li key={h} className="flex gap-2.5 text-2xs text-ink-soft">
+                        <span className="mt-[0.45em] h-2 w-2 shrink-0 bg-pink" aria-hidden="true" />
                         {h}
                       </li>
                     ))}
                   </ul>
                 )}
               </div>
-            </motion.div>
+            </Reveal>
           ))}
+        </div>
 
-          <motion.a
-            href="https://www.coursera.org/account/accomplishments/verify/SVKZVN55Y84D"
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: education.length * 0.2 }}
-            className="group flex items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-dark-700 border border-gray-100 dark:border-dark-600 hover:border-primary-300 dark:hover:border-primary-700 transition-all duration-300"
-          >
-            <div>
-              <p className="text-xs font-mono uppercase tracking-wider text-primary-500 mb-1">Certification</p>
-              <h3 className="font-bold font-display">Design Patterns</h3>
-              <p className="text-sm text-gray-500 dark:text-dark-300">University of Alberta · Coursera</p>
-            </div>
-            <ExternalLink size={18} className="text-gray-400 group-hover:text-primary-500 transition-colors" />
-          </motion.a>
-        </motion.div>
+        {/* Awards */}
+        <div className="grid gap-6 sm:grid-cols-2">
+          {awards.map(({ icon: Icon, title, period, description }, i) => (
+            <Reveal
+              key={title}
+              index={i}
+              className="cell-flat flex flex-col gap-2.5"
+            >
+              <Icon size={22} strokeWidth={2.5} className="text-violet" />
+              <h3 className="text-base">{title}</h3>
+              <p className="eyebrow tabular">{period}</p>
+              <p className="text-2xs text-ink-soft">{description}</p>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

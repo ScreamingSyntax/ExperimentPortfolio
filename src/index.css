@@ -2,26 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   Design tokens — "Hard Edge"
+   One source of truth. Tailwind's colour utilities read these variables, so
+   flipping .dark re-resolves the entire palette without duplicating classes.
+   ========================================================================== */
+
 :root {
-  --cursor-size: 20px;
-  --gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
-  --gradient-accent: linear-gradient(135deg, #14b8a6, #6366f1);
-  --noise-opacity: 0.03;
+  --paper: #ffffff;
+  --cream: #fff9ec;
+  --ink: #0a0a0a;
+  --ink-soft: #4a4742;
+  --grid: #e7e4dc;
+
+  --pink: #ff5fa2;
+  --lime: #c8f53d;
+  --violet: #7b4dff;
+
+  /* Text on an accent fill. Accents are light in both themes, so these do
+     not invert — that is the whole point of having them. */
+  --on-pink: #0a0a0a;
+  --on-lime: #0a0a0a;
+  --on-violet: #ffffff;
+
+  /* Terminal palette. Deliberately does NOT invert with the theme — a code
+     block reads as a terminal, and its syntax accents are chosen to sit on a
+     dark ground. Inverting it would put lime text on cream. */
+  --code-bg: #0a0a0a;
+  --code-fg: #f2ede2;
+  --code-key: #916bff;
+  --code-str: #c8f53d;
+
+  --grid-size: 26px;
+}
+
+.dark {
+  --paper: #131211;
+  --cream: #1d1b17;
+  --ink: #f2ede2; /* warm off-white — pure white borders glare on dark */
+  --ink-soft: #a9a296;
+  --grid: #2a2825;
+
+  --violet: #916bff; /* lifted to hold contrast against the dark ground */
+  --on-violet: #0a0a0a;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+    scroll-padding-top: 88px;
   }
 
   body {
-    @apply font-sans text-dark-500 dark:text-dark-100 bg-white dark:bg-dark-900 transition-colors duration-500;
+    @apply bg-paper font-sans text-ink;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: var(--grid-size) var(--grid-size);
+    font-size: theme('fontSize.base');
+    line-height: 1.62;
     overflow-x: hidden;
   }
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.92;
+    text-wrap: balance;
+  }
+
   ::selection {
-    @apply bg-primary-500/30 text-primary-900 dark:text-primary-100;
+    background: var(--violet);
+    color: var(--on-violet);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--violet);
+    outline-offset: 3px;
   }
 
   * {
@@ -30,197 +90,243 @@
 }
 
 @layer components {
-  .section {
-    @apply py-20 md:py-32 relative overflow-hidden;
-  }
-
+  /* ---- Layout ---------------------------------------------------------- */
   .container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-[1280px] px-4 sm:px-6;
   }
 
-  .heading-xl {
-    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight font-display;
+  /* A band is a full-width horizontal slice of the bento. Panels inside a
+     band share borders — the gap is 0 so strokes double up into a heavier
+     line, which is the look we want. */
+  .band {
+    @apply grid grid-cols-1 border-3 border-ink md:grid-cols-12;
   }
 
-  .heading-lg {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight font-display;
+  .band + .band {
+    @apply border-t-0;
   }
 
-  .heading-md {
-    @apply text-2xl md:text-3xl font-bold tracking-tight font-display;
+  /* ---- Cell: the base panel. Everything is a Cell. --------------------- */
+  .cell {
+    @apply border-3 border-ink bg-paper p-5 sm:p-6;
+    box-shadow: 7px 7px 0 var(--ink);
   }
 
-  .heading-sm {
-    @apply text-xl md:text-2xl font-bold tracking-tight font-display;
+  .cell-flat {
+    @apply border-3 border-ink bg-paper p-5 sm:p-6;
   }
 
-  .text-gradient {
-    @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-primary);
-    background-size: 200% 200%;
-    animation: gradient-x 6s ease infinite;
+  /* Panels inside a .band: no shadow, borders collapse into neighbours. */
+  .panel {
+    @apply border-ink p-5 sm:p-7;
   }
 
-  .text-gradient-accent {
-    @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-accent);
+  /* ---- Button ---------------------------------------------------------- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 border-3 border-ink px-5 py-3
+           font-bold uppercase tracking-[0.06em] text-base no-underline;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition:
+      transform 90ms cubic-bezier(0.2, 0, 0, 1),
+      box-shadow 90ms cubic-bezier(0.2, 0, 0, 1);
   }
 
-  .card {
-    @apply bg-white dark:bg-dark-700 rounded-2xl shadow-lg dark:shadow-dark-900/30 overflow-hidden;
-    @apply border border-gray-100 dark:border-dark-600;
+  .btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--ink);
   }
 
-  .card-hover {
-    @apply card transition-all duration-500;
-    @apply hover:shadow-xl hover:-translate-y-2 hover:border-primary-200 dark:hover:border-primary-800;
+  .btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 var(--ink);
   }
 
-  .glass {
-    @apply bg-white/70 dark:bg-dark-800/70 backdrop-blur-xl;
-    @apply border border-white/20 dark:border-white/5;
+  .btn-primary {
+    @apply bg-lime text-on-lime;
   }
 
-  .glass-strong {
-    @apply bg-white/90 dark:bg-dark-800/90 backdrop-blur-2xl;
-    @apply border border-white/30 dark:border-white/10;
+  .btn-ghost {
+    @apply bg-paper text-ink;
   }
 
-  .gradient-border {
-    position: relative;
-    background: transparent;
+  .btn-violet {
+    @apply bg-violet text-on-violet;
   }
 
-  .gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: var(--gradient-primary);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+  /* ---- Tag: outlined chip for stack items ------------------------------ */
+  .tag {
+    @apply inline-block whitespace-nowrap border-2 border-current px-2 py-[0.15em]
+           text-2xs uppercase leading-[1.5] tracking-[0.08em];
   }
 
-  .noise-overlay {
-    position: relative;
+  .tag-fill {
+    @apply border-ink bg-ink text-paper;
   }
 
-  .noise-overlay::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    opacity: var(--noise-opacity);
-    pointer-events: none;
-    z-index: 1;
-    mix-blend-mode: overlay;
+  /* ---- Sticker: rotated callout. Max 3 per page. ----------------------- */
+  .sticker {
+    @apply inline-block border-3 border-ink bg-violet px-3 py-1.5 text-2xs font-bold
+           uppercase tracking-[0.08em] text-on-violet;
+    box-shadow: 4px 4px 0 var(--ink);
+    transform: rotate(-2.5deg);
+    transition: transform 90ms cubic-bezier(0.2, 0, 0, 1);
   }
 
-  .section-divider {
-    @apply w-full h-px;
-    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.3), transparent);
+  .sticker:hover {
+    transform: rotate(2deg);
   }
 
-  .glow-dot {
-    @apply w-2 h-2 rounded-full bg-primary-500;
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
+  /* ---- Starburst: 20-point badge. Exactly one per page. ---------------- */
+  .starburst {
+    @apply grid place-items-center bg-pink text-center font-display uppercase text-on-pink;
+    aspect-ratio: 1;
+    line-height: 1.05;
+    clip-path: polygon(
+      50% 0%, 61% 18%, 79% 9%, 80% 29%, 100% 31%, 88% 48%, 100% 66%,
+      80% 70%, 79% 90%, 61% 83%, 50% 100%, 39% 83%, 21% 90%, 20% 70%,
+      0% 66%, 12% 48%, 0% 31%, 20% 29%, 21% 9%, 39% 18%
+    );
+  }
+
+  /* ---- Eyebrow / label ------------------------------------------------- */
+  .eyebrow {
+    @apply text-2xs uppercase tracking-[0.16em] text-ink-soft;
+  }
+
+  .label {
+    @apply text-2xs font-bold uppercase tracking-[0.12em];
+  }
+
+  /* ---- Form fields ----------------------------------------------------- */
+  .field {
+    @apply w-full border-3 border-ink bg-paper px-4 py-3 text-base text-ink
+           placeholder:text-ink-soft;
+    box-shadow: inset 3px 3px 0 var(--grid);
+  }
+
+  .field:focus {
+    outline: 3px solid var(--violet);
+    outline-offset: 2px;
+  }
+
+  /* ---- Terminal: always a dark code surface, in both themes ------------ */
+  .terminal {
+    background: var(--code-bg);
+    color: var(--code-fg);
+  }
+
+  .terminal .tok-key {
+    color: var(--code-key);
+  }
+
+  .terminal .tok-str {
+    color: var(--code-str);
+  }
+
+  /* ---- Marquee: inverted scrolling strip ------------------------------- */
+  .marquee {
+    @apply flex overflow-hidden border-y-3 border-ink bg-ink text-paper;
+  }
+
+  .marquee__track {
+    @apply flex shrink-0 animate-marquee items-center whitespace-nowrap py-2.5
+           text-2xs uppercase tracking-[0.18em];
   }
 }
 
-@media (pointer: fine) {
-  .custom-cursor {
-    cursor: none;
+/* ---- Scroll reveal -----------------------------------------------------
+   Base state is visible. The hidden state only exists under html.js, so a
+   page with no scripting — or a stalled animation — still shows its content.
+   ------------------------------------------------------------------------ */
+.reveal {
+  opacity: 1;
+}
+
+.js .reveal {
+  opacity: 0;
+  transform: scale(0.96);
+  transition:
+    opacity 180ms cubic-bezier(0.2, 0, 0, 1),
+    transform 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.js .reveal--in {
+  opacity: 1;
+  transform: none;
+}
+
+@layer utilities {
+  /* Measure cap — mono runs ~15% wider than proportional type, so prose
+     needs a tighter character count than the usual 65ch. */
+  .measure {
+    max-width: 62ch;
   }
 
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Opt a region out of the page's grid texture. */
+  .no-grid {
+    background-image: none;
+  }
+}
+
+/* ---- Cursor ------------------------------------------------------------ */
+@media (pointer: fine) {
+  .custom-cursor,
   .custom-cursor a,
   .custom-cursor button,
   .custom-cursor input,
   .custom-cursor textarea,
   .custom-cursor select,
-  .custom-cursor [role="button"] {
+  .custom-cursor [role='button'] {
     cursor: none;
   }
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-primary-400/50 dark:bg-primary-600/50 rounded-full;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  @apply bg-primary-500/70 dark:bg-primary-500/70;
-}
-
+/* ---- Scrollbar --------------------------------------------------------- */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 14px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-50 dark:bg-dark-900;
+  background: var(--cream);
+  border-left: 3px solid var(--ink);
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-dark-600 rounded-full;
-  border: 2px solid transparent;
-  background-clip: padding-box;
+  background: var(--violet);
+  border-left: 3px solid var(--ink);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-primary-400 dark:bg-primary-600;
+  background: var(--pink);
 }
 
-.progress-bar-fill {
-  position: relative;
-  overflow: hidden;
+/* ---- Typewriter caret -------------------------------------------------- */
+.caret {
+  @apply inline-block w-[0.6em] animate-blink bg-current align-baseline;
+  height: 1em;
+  transform: translateY(0.12em);
 }
 
-.progress-bar-fill::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
-  animation: shimmer 2.5s linear infinite;
-  background-size: 200% 100%;
-}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 
-@keyframes typing-cursor {
-  0%, 100% { border-color: currentColor; }
-  50% { border-color: transparent; }
-}
+  /* Reveals resolve instantly rather than not at all. */
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
 
-.typing-cursor {
-  border-right: 2px solid;
-  animation: typing-cursor 1s step-end infinite;
-}
-
-.stagger-in > * {
-  opacity: 0;
-  animation: slide-up 0.5s ease-out forwards;
-}
-
-.stagger-in > *:nth-child(1) { animation-delay: 0.1s; }
-.stagger-in > *:nth-child(2) { animation-delay: 0.2s; }
-.stagger-in > *:nth-child(3) { animation-delay: 0.3s; }
-.stagger-in > *:nth-child(4) { animation-delay: 0.4s; }
-.stagger-in > *:nth-child(5) { animation-delay: 0.5s; }
-.stagger-in > *:nth-child(6) { animation-delay: 0.6s; }
-
-@keyframes slide-up {
-  0% { transform: translateY(20px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

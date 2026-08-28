@@ -1,14 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import HeroCanvas from './three/HeroCanvas';
-import { ChevronDown, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, Download, Github, Linkedin, Mail, BookOpen } from 'lucide-react';
 
 const roles = [
-  'Mid-Level Backend Engineer',
-  '.NET & ASP.NET Core Developer',
-  'Microservices Engineer',
-  'Event-Driven Systems Builder',
+  'Backend Engineer',
+  '.NET & ASP.NET Core',
+  'Microservices',
+  'Event-Driven Systems',
   'Tech Mentor',
+];
+
+const socials = [
+  { href: 'https://github.com/ScreamingSyntax', label: 'GitHub', icon: Github },
+  { href: 'https://www.linkedin.com/in/aaryanjha/', label: 'LinkedIn', icon: Linkedin },
+  { href: 'https://medium.com/@jha.aaryan', label: 'Medium', icon: BookOpen },
+  { href: 'mailto:whcloud91@gmail.com', label: 'Email', icon: Mail },
 ];
 
 const Hero: React.FC = () => {
@@ -24,118 +30,115 @@ const Hero: React.FC = () => {
         setDisplayText(currentRole.slice(0, displayText.length + 1));
       } else {
         setTimeout(() => setIsDeleting(true), 2000);
-        return;
       }
+    } else if (displayText.length > 0) {
+      setDisplayText(displayText.slice(0, -1));
     } else {
-      if (displayText.length > 0) {
-        setDisplayText(displayText.slice(0, -1));
-      } else {
-        setIsDeleting(false);
-        setRoleIndex((prev) => (prev + 1) % roles.length);
-        return;
-      }
+      setIsDeleting(false);
+      setRoleIndex((prev) => (prev + 1) % roles.length);
     }
   }, [displayText, isDeleting, roleIndex]);
 
   useEffect(() => {
-    const speed = isDeleting ? 40 : 80;
-    const timeout = setTimeout(typeText, speed);
+    const timeout = setTimeout(typeText, isDeleting ? 40 : 80);
     return () => clearTimeout(timeout);
   }, [typeText, isDeleting]);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
-      <HeroCanvas />
+    <section className="container pb-8 pt-10 sm:pt-14">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.25, ease: [0.2, 0, 0, 1] }}
+        className="border-3 border-ink shadow-hard-lg"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-5">
+          {/* --- Left: the pitch ------------------------------------------ */}
+          <div className="no-grid flex flex-col gap-6 border-b-3 border-ink bg-paper p-6 sm:p-9 lg:col-span-3 lg:border-b-0 lg:border-r-3">
+            {/* The sticker sits inside the h1 so the page's one top-level
+                heading actually carries the name — "Hey, I'm Aaryan Jha,
+                Backend Engineer" — rather than a job title on its own. */}
+            <h1 className="flex flex-col items-start gap-6">
+              <span className="sticker font-sans">Hey, I'm Aaryan Jha 👋</span>
+              <span className="text-3xl">
+                Backend{' '}
+                <br />
+                Engineer
+              </span>
+            </h1>
 
-      <div className="absolute inset-0 flex items-center justify-center z-10">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white/70 text-sm mb-8"
-              >
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                Available for opportunities
-              </motion.div>
+            <p className="measure text-base text-ink-soft">
+              I build secure fintech and enterprise platforms with .NET, distributed
+              microservices, and event-driven architecture — from database schema to
+              production deploy.
+            </p>
 
-              <h1 className="heading-xl mb-4 text-white">
-                <span className="block text-lg sm:text-xl md:text-2xl font-normal text-white/60 mb-3 font-sans">
-                  Hello, I'm
-                </span>
-                <span className="text-gradient block">Aaryan Jha</span>
-              </h1>
+            <div className="flex min-h-[2.2em] items-center gap-2 border-y-3 border-ink py-2">
+              <span className="label shrink-0 text-violet">./role</span>
+              <span className="text-base">
+                {displayText}
+                <span className="caret" aria-hidden="true" />
+              </span>
+            </div>
 
-              <div className="h-12 md:h-14 flex items-center justify-center mb-8">
-                <span className="text-xl md:text-2xl lg:text-3xl font-display text-white/80">
-                  {displayText}
-                  <span className="typing-cursor text-primary-400">&nbsp;</span>
-                </span>
+            <div className="flex flex-wrap gap-4">
+              <a href="#experience" className="btn btn-primary">
+                View my work <ArrowUpRight size={18} />
+              </a>
+              <a href="/resume.pdf" download className="btn btn-ghost">
+                Download resume <Download size={18} />
+              </a>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <span className="eyebrow">Connect with me</span>
+              <div className="flex gap-3">
+                {socials.map(({ href, label, icon: Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith('http') ? '_blank' : undefined}
+                    rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    aria-label={label}
+                    className="grid h-11 w-11 place-items-center border-3 border-ink bg-paper shadow-hard-xs transition-all duration-100 ease-snap hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-lime hover:text-on-lime hover:shadow-none"
+                  >
+                    <Icon size={18} />
+                  </a>
+                ))}
               </div>
+            </div>
+          </div>
 
-              <motion.p
-                className="text-base md:text-lg max-w-2xl mx-auto text-white/50 mb-10 leading-relaxed"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 1.0 }}
-              >
-                Building secure fintech and enterprise platforms with
-                <span className="text-primary-300 font-medium"> .NET</span>,
-                <span className="text-accent-300 font-medium"> microservices</span>, and event-driven architecture.
-              </motion.p>
+          {/* --- Right: photo + code card --------------------------------- */}
+          <div className="relative bg-pink p-6 sm:p-9 lg:col-span-2">
+            <img
+              src="/aaryan_photo.jpg"
+              alt="Aaryan Jha"
+              className="h-64 w-full border-3 border-ink object-cover shadow-hard sm:h-80"
+              loading="eager"
+            />
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.3 }}
-                className="flex flex-col sm:flex-row justify-center items-center gap-4"
-              >
-                <a
-                  href="#contact"
-                  className="group px-8 py-3.5 bg-primary-500 hover:bg-primary-600 text-white rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 flex items-center gap-2 font-medium"
-                >
-                  Get in Touch
-                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="#projects"
-                  className="px-8 py-3.5 bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border border-white/10 hover:border-white/20 rounded-xl transition-all duration-300 transform hover:scale-105 font-medium"
-                >
-                  View My Work
-                </a>
-              </motion.div>
-            </motion.div>
+            <div className="terminal relative -mt-10 ml-auto w-full max-w-[19rem] border-3 border-ink p-4 shadow-hard sm:-mt-12">
+              <pre className="overflow-x-auto text-2xs leading-relaxed">
+                <code>
+                  <span className="tok-key">const</span> engineer = {'{'}
+                  {'\n  '}stack: <span className="tok-str">'.NET'</span>,
+                  {'\n  '}scale: <span className="tok-str">'325+ APIs'</span>,
+                  {'\n  '}msg: <span className="tok-str">'Kafka'</span>,
+                  {'\n  '}based: <span className="tok-str">'Kathmandu'</span>,
+                  {'\n'}
+                  {'}'}
+                </code>
+              </pre>
+            </div>
+
+            <div className="mt-6 flex items-center gap-3 border-3 border-ink bg-paper px-4 py-2.5">
+              <span className="h-3 w-3 shrink-0 bg-lime ring-2 ring-ink" aria-hidden="true" />
+              <span className="label">Available for opportunities</span>
+            </div>
           </div>
         </div>
-      </div>
-
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-      >
-        <a
-          href="#about"
-          className="flex flex-col items-center text-white/40 hover:text-white/70 transition-colors group"
-        >
-          <span className="text-xs font-mono mb-2 tracking-widest uppercase">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <ChevronDown size={20} className="group-hover:text-primary-400 transition-colors" />
-          </motion.div>
-        </a>
       </motion.div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-dark-900 to-transparent z-[5]" />
     </section>
   );
 };

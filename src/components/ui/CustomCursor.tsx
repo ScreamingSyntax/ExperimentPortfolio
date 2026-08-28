@@ -37,7 +37,9 @@ const CustomCursor: React.FC = () => {
     ring.style.width = `${ringSize}px`;
     ring.style.height = `${ringSize}px`;
     ring.style.transform = `translate(${ringPos.current.x}px, ${ringPos.current.y}px) translate(-50%, -50%) scale(${ringScale})`;
-    ring.style.borderColor = isHover ? 'rgba(99, 102, 241, 0.8)' : 'rgba(99, 102, 241, 0.35)';
+    // Solid, token-driven — a translucent ring disappears on a white ground,
+    // and this design has no translucency anywhere else.
+    ring.style.borderColor = isHover ? 'var(--violet)' : 'var(--ink)';
     ring.style.opacity = isVisible ? '1' : '0';
 
     animRef.current = requestAnimationFrame(render);
@@ -50,6 +52,11 @@ const CustomCursor: React.FC = () => {
     const onMove = (e: MouseEvent) => {
       pos.current.x = e.clientX;
       pos.current.y = e.clientY;
+
+      // Moving the pointer proves it is over the page. Relying on
+      // `mouseenter` alone leaves no cursor at all when the page loads with
+      // the pointer already inside the window — the native one is hidden.
+      visible.current = true;
 
       const target = e.target as HTMLElement;
       hovering.current = !!target.closest('a, button, [role="button"], input, textarea, select, [data-cursor-hover]');
@@ -92,9 +99,7 @@ const CustomCursor: React.FC = () => {
           left: 0,
           width: 8,
           height: 8,
-          borderRadius: '50%',
-          backgroundColor: '#6366f1',
-          boxShadow: '0 0 12px 3px rgba(99, 102, 241, 0.5)',
+          backgroundColor: 'var(--violet)',
           pointerEvents: 'none',
           zIndex: 9999,
           opacity: 0,
@@ -108,10 +113,9 @@ const CustomCursor: React.FC = () => {
           position: 'fixed',
           top: 0,
           left: 0,
-          width: 40,
-          height: 40,
-          borderRadius: '50%',
-          border: '1.5px solid rgba(99, 102, 241, 0.35)',
+          width: 34,
+          height: 34,
+          border: '3px solid var(--ink)',
           pointerEvents: 'none',
           zIndex: 9998,
           opacity: 0,

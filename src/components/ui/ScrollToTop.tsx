@@ -15,12 +15,12 @@ const ScrollToTop: React.FC = () => {
     <AnimatePresence>
       {isVisible && (
         <motion.button
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          transition={{ duration: 0.3 }}
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.96 }}
+          transition={{ duration: 0.18, ease: [0.2, 0, 0, 1] }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 p-3 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white rounded-xl shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 z-50 transition-all duration-300 hover:scale-110 active:scale-95"
+          className="fixed bottom-6 right-6 z-50 grid h-12 w-12 place-items-center border-3 border-ink bg-lime text-on-lime shadow-hard-sm transition-all duration-100 ease-snap hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
           aria-label="Scroll to top"
         >
           <ChevronUp size={20} />

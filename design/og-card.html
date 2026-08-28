@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+
+  body {
+    background: #fff;
+    font-family: "Space Mono", monospace;
+    color: #0a0a0a;
+    display: flex;
+  }
+
+  .card {
+    width: 1200px; height: 630px;
+    border: 12px solid #0a0a0a;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+  }
+
+  .left {
+    padding: 52px 48px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    background-color: #fff;
+    background-image:
+      linear-gradient(#e7e4dc 1px, transparent 1px),
+      linear-gradient(90deg, #e7e4dc 1px, transparent 1px);
+    background-size: 30px 30px;
+    border-right: 12px solid #0a0a0a;
+  }
+
+  .sticker {
+    align-self: flex-start;
+    background: #7b4dff; color: #fff;
+    border: 5px solid #0a0a0a;
+    box-shadow: 8px 8px 0 #0a0a0a;
+    padding: 12px 20px;
+    font-weight: 700; font-size: 21px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transform: rotate(-2.5deg);
+  }
+
+  h1 {
+    font-family: "Archivo Black", "Arial Black", sans-serif;
+    font-size: 116px; line-height: 0.86;
+    letter-spacing: -0.03em; text-transform: uppercase;
+  }
+
+  .role {
+    font-size: 22px; letter-spacing: 0.05em;
+    color: #4a4742;
+    border-top: 5px solid #0a0a0a;
+    padding-top: 18px;
+  }
+
+  .tags { display: flex; gap: 12px; }
+
+  .tag {
+    border: 4px solid #0a0a0a;
+    padding: 8px 16px;
+    font-size: 19px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .tag.fill { background: #0a0a0a; color: #fff; }
+
+  .right {
+    background: #ff5fa2;
+    padding: 44px 38px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+
+  .photo {
+    width: 100%; height: 380px;
+    object-fit: cover; object-position: center top;
+    border: 6px solid #0a0a0a;
+    box-shadow: 10px 10px 0 #0a0a0a;
+    display: block;
+  }
+
+  .status {
+    background: #c8f53d; color: #0a0a0a;
+    border: 6px solid #0a0a0a;
+    box-shadow: 8px 8px 0 #0a0a0a;
+    padding: 14px 16px;
+    font-weight: 700; font-size: 18px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="left">
+      <div class="sticker">Hey, I'm Aaryan Jha</div>
+
+      <h1>Backend<br>Engineer</h1>
+
+      <div class="role">.NET &middot; Microservices &middot; Kafka &middot; Event-Driven</div>
+
+      <div class="tags">
+        <span class="tag fill">C#</span>
+        <span class="tag">.NET</span>
+        <span class="tag">Kafka</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">Docker</span>
+      </div>
+    </div>
+
+    <div class="right">
+      <img class="photo" src="../public/aaryan_photo.jpg" alt="Aaryan Jha">
+      <div class="status">Available for work</div>
+    </div>
+  </div>
+</body>
+</html>
