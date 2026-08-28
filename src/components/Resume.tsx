@@ -53,12 +53,12 @@ const resumeJson = {
     year: '2022 - 2025',
   },
   certifications: [
-    { name: 'Back-End Development with .NET', issuer: 'Microsoft', date: '2026-08-26' },
-    { name: 'Introduction to Programming With C#', issuer: 'Microsoft', date: '2026-08-20' },
-    { name: 'Database Integration and Management', issuer: 'Microsoft', date: '2026-08-19' },
-    { name: 'Data Structures and Algorithms', issuer: 'Microsoft', date: '2026-08-18' },
-    { name: 'Foundations of Coding Back-End', issuer: 'Microsoft', date: '2026-08-17' },
-    { name: 'Design Patterns', issuer: 'University of Alberta', date: '2026-05-22' },
+    { name: 'Back-End Development with .NET', issuer: 'Microsoft' },
+    { name: 'Introduction to Programming With C#', issuer: 'Microsoft' },
+    { name: 'Database Integration and Management', issuer: 'Microsoft' },
+    { name: 'Data Structures and Algorithms', issuer: 'Microsoft' },
+    { name: 'Foundations of Coding Back-End', issuer: 'Microsoft' },
+    { name: 'Design Patterns', issuer: 'University of Alberta' },
   ],
   awards: [
     'Triple A Scholarship (all academic years)',
