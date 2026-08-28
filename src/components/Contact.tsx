@@ -34,7 +34,7 @@ const Contact: React.FC = () => {
           ? ''
           : 'That email address is missing an @ or a domain'
         : 'Enter an email address so I can reply',
-      message: formState.message ? '' : 'Add a message — a sentence is plenty',
+      message: formState.message ? '' : 'Add a message. A sentence is plenty.',
     };
     setErrors(newErrors);
     return !Object.values(newErrors).some((e) => e);
@@ -83,8 +83,8 @@ const Contact: React.FC = () => {
               something.
             </h2>
             <p className="measure mt-4 text-2xs">
-              Backend work, platform architecture, or mentoring — I read everything that
-              lands here.
+              Backend work, platform architecture, or mentoring. I read everything
+              that lands here.
             </p>
           </div>
           <div className="starburst hidden h-32 w-32 shrink-0 border-ink p-4 text-2xs sm:grid">

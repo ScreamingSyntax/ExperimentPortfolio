@@ -196,7 +196,7 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
 
 const Experience: React.FC = () => (
   <section id="experience" className="container py-12 sm:py-16">
-    <SectionHeading num="03" title="Experience" subtitle="Four roles, two countries' worth of teams" />
+    <SectionHeading num="03" title="Experience" subtitle="Where I've worked so far" />
     <div className="max-w-4xl">
       {experiences.map((exp, index) => (
         <ExperienceCard key={exp.company} exp={exp} index={index} />

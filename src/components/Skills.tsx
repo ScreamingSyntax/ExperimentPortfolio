@@ -79,7 +79,7 @@ const Skills: React.FC = () => {
       </div>
 
       <section id="skills" className="container py-12 sm:py-16">
-        <SectionHeading num="01" title="Skills" subtitle="What I reach for, and what I build with it" />
+        <SectionHeading num="01" title="Skills" subtitle="What I work with day to day" />
 
         {/* Six headline technologies */}
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">

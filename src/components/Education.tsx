@@ -12,7 +12,7 @@ const education = [
     grade: 'Straight A',
     highlights: [
       'Triple A Scholarship recipient for all years',
-      'Selected for the International Exposure Program in Thailand — 1 of 4 students',
+      'One of 4 students selected for the International Exposure Program in Thailand',
       '3rd Place, 30-Second Pitch Challenge, DesignThinkers Academy Thailand',
     ],
   },
@@ -40,7 +40,7 @@ const awards = [
   },
   {
     icon: Trophy,
-    title: '30-Second Pitch Challenge — 3rd',
+    title: '3rd Place, Pitch Challenge',
     period: '2024',
     description: 'Competed against international participants at DesignThinkers Academy, Thailand',
   },
@@ -62,7 +62,7 @@ const Education: React.FC = () => {
 
   return (
     <section id="education" className="container py-12 sm:py-16">
-      <SectionHeading num="04" title="Education & Awards" subtitle="The foundation, and what came out of it" />
+      <SectionHeading num="04" title="Education & Awards" subtitle="Where I studied, and what I picked up" />
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Education */}

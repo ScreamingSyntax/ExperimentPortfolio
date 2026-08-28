@@ -69,8 +69,8 @@ const Hero: React.FC = () => {
 
             <p className="measure text-base text-ink-soft">
               I build secure fintech and enterprise platforms with .NET, distributed
-              microservices, and event-driven architecture — from database schema to
-              production deploy.
+              microservices, and event-driven architecture. I work across the whole
+              thing, from database schema to production deploy.
             </p>
 
             <div className="flex min-h-[2.2em] items-center gap-2 border-y-3 border-ink py-2">

@@ -36,7 +36,7 @@ const Certifications: React.FC = () => {
       <SectionHeading
         num="02"
         title="Certifications"
-        subtitle="Six credentials, all verifiable on Coursera"
+        subtitle="All six are verifiable on Coursera"
       />
 
       <div className="grid gap-6 lg:grid-cols-3">
