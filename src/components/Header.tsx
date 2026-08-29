@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sun, Moon, ArrowUpRight } from 'lucide-react';
 import { cn } from '../lib/utils';
+import CharacterArt from './ui/CharacterArt';
 
 interface HeaderProps {
   theme: string;
@@ -121,6 +122,23 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             className="no-grid overflow-hidden border-b-3 border-ink bg-paper lg:hidden"
           >
             <ul className="mx-auto max-w-[1280px]">
+              <li className="flex items-center justify-between gap-4 border-b-3 border-ink bg-pink px-5 text-on-pink">
+                <div>
+                  <p className="eyebrow text-on-pink opacity-70">Menu</p>
+                  <p className="font-display text-base">Aaryan Jha</p>
+                </div>
+                <CharacterArt
+                  name="smile"
+                  widths={[160, 240, 400]}
+                  width={400}
+                  height={400}
+                  sizes="88px"
+                  alt=""
+                  className="character-swap h-24 w-24 self-end object-contain object-bottom"
+                  loading="lazy"
+                />
+              </li>
+
               {navLinks.map((link) => (
                 <li key={link.href} className="border-b-2 border-grid last:border-b-0">
                   <a
