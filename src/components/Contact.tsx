@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Send, AlertCircle, ArrowUpRight, MapPin, Clock, Phone, Mail, Github, Linkedin, BookOpen } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import Reveal from './ui/Reveal';
+import CharacterArt from './ui/CharacterArt';
 
 const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -24,7 +25,22 @@ const Contact: React.FC = () => {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isWritingMessage, setIsWritingMessage] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<null | 'success' | 'error'>(null);
+
+  const contactArt = submitStatus === 'success'
+    ? 'thanks'
+    : submitStatus === 'error'
+      ? 'bug'
+      : isSubmitting || isWritingMessage
+        ? 'thinking'
+        : 'idea';
+
+  const contactArtMotion = submitStatus === 'success'
+    ? 'character-wave'
+    : submitStatus === 'error'
+      ? 'character-shake'
+      : 'character-swap';
 
   const validateForm = () => {
     const newErrors = {
@@ -87,9 +103,17 @@ const Contact: React.FC = () => {
               that lands here.
             </p>
           </div>
-          <div className="starburst hidden h-32 w-32 shrink-0 border-ink p-4 text-2xs sm:grid">
-            Open to work
-          </div>
+          <CharacterArt
+            key={contactArt}
+            name={contactArt}
+            widths={[160, 240, 400]}
+            width={400}
+            height={400}
+            sizes="(min-width: 1024px) 192px, 160px"
+            alt=""
+            className={`hidden h-40 w-40 shrink-0 object-contain sm:block lg:h-48 lg:w-48 ${contactArtMotion}`}
+            loading="lazy"
+          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5">
@@ -188,6 +212,8 @@ const Contact: React.FC = () => {
                   rows={5}
                   value={formState.message}
                   onChange={handleChange}
+                  onFocus={() => setIsWritingMessage(true)}
+                  onBlur={() => setIsWritingMessage(false)}
                   placeholder="What are you building?"
                   aria-invalid={Boolean(errors.message)}
                   aria-describedby={errors.message ? 'message-error' : undefined}

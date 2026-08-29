@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Download, Github, Linkedin, Mail, BookOpen } from 'lucide-react';
+import CharacterArt from './ui/CharacterArt';
 
 const roles = [
   'Backend Engineer',
@@ -111,11 +112,16 @@ const Hero: React.FC = () => {
 
           {/* --- Right: photo + code card --------------------------------- */}
           <div className="relative bg-pink p-6 sm:p-9 lg:col-span-2">
-            <img
-              src="/aaryan_photo.jpg"
-              alt="Aaryan Jha"
-              className="h-64 w-full border-3 border-ink object-cover shadow-hard sm:h-80"
+            <CharacterArt
+              name="coding"
+              widths={[480, 768, 1024]}
+              width={1024}
+              height={820}
+              sizes="(min-width: 1024px) 36vw, (min-width: 640px) 70vw, 100vw"
+              alt="Illustration of Aaryan coding at a laptop"
+              className="h-64 w-full border-3 border-ink bg-lime object-contain object-bottom shadow-hard sm:h-80"
               loading="eager"
+              fetchPriority="high"
             />
 
             <div className="terminal relative -mt-10 ml-auto w-full max-w-[19rem] border-3 border-ink p-4 shadow-hard sm:-mt-12">

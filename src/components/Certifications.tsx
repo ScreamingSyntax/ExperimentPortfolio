@@ -1,6 +1,7 @@
 import { ArrowUpRight, BadgeCheck } from 'lucide-react';
 import SectionHeading from './ui/SectionHeading';
 import Reveal from './ui/Reveal';
+import CharacterArt from './ui/CharacterArt';
 
 const VERIFY = 'https://www.coursera.org/account/accomplishments/verify/';
 
@@ -37,6 +38,18 @@ const Certifications: React.FC = () => {
         num="02"
         title="Certifications"
         subtitle="All six are verifiable on Coursera"
+        art={
+          <CharacterArt
+            name="achievement"
+            widths={[160, 240, 400]}
+            width={400}
+            height={400}
+            sizes="(min-width: 1024px) 144px, 96px"
+            alt=""
+            className="h-auto w-full object-contain object-bottom"
+            loading="lazy"
+          />
+        }
       />
 
       <div className="grid gap-6 lg:grid-cols-3">

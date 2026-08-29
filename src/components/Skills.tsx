@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Server, Database, ShieldCheck, Network, ChevronDown } from 'lucide-react';
 import SectionHeading from './ui/SectionHeading';
 import Reveal from './ui/Reveal';
+import CharacterArt from './ui/CharacterArt';
 
 /** The six that lead. Everything else lives in the marquee or the full list. */
 const headline = ['C#', '.NET', 'Kafka', 'PostgreSQL', 'Docker', 'Redis'];
@@ -110,18 +111,33 @@ const Skills: React.FC = () => {
         </div>
 
         {/* Full stack list, folded away by default */}
-        <button
-          type="button"
-          onClick={() => setExpanded(!expanded)}
-          aria-expanded={expanded}
-          className="btn btn-ghost mt-8"
-        >
-          {expanded ? 'Hide full stack' : 'See the full stack'}
-          <ChevronDown
-            size={18}
-            className={`transition-transform duration-150 ${expanded ? 'rotate-180' : ''}`}
-          />
-        </button>
+        <div className="mt-8 flex items-end gap-3">
+          <Reveal className="hidden shrink-0 lg:block">
+            <CharacterArt
+              name="pointing"
+              widths={[160, 240, 400]}
+              width={400}
+              height={300}
+              sizes="128px"
+              alt=""
+              className="character-point h-auto w-32 object-contain"
+              loading="lazy"
+            />
+          </Reveal>
+
+          <button
+            type="button"
+            onClick={() => setExpanded(!expanded)}
+            aria-expanded={expanded}
+            className="btn btn-ghost"
+          >
+            {expanded ? 'Hide full stack' : 'See the full stack'}
+            <ChevronDown
+              size={18}
+              className={`transition-transform duration-150 ${expanded ? 'rotate-180' : ''}`}
+            />
+          </button>
+        </div>
 
         {expanded && (
           <div className="mt-6 grid gap-6 md:grid-cols-2">
