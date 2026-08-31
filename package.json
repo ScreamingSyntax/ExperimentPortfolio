@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "og": "node design/build-og.mjs",
-    "characters": "node design/build-characters.mjs"
+    "characters": "node design/build-characters.mjs",
+    "keywraith": "node design/build-keywraith.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

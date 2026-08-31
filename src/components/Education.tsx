@@ -64,7 +64,7 @@ const Education: React.FC = () => {
   return (
     <section id="education" className="container py-12 sm:py-16">
       <SectionHeading
-        num="04"
+        num="05"
         title="Education & Awards"
         subtitle="Where I studied, and what I picked up"
         art={

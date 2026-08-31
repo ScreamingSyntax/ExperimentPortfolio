@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import Skills from './components/Skills';
 import Certifications from './components/Certifications';
 import Experience from './components/Experience';
+import Keywraith from './components/Keywraith';
 import Education from './components/Education';
 import Resume from './components/Resume';
 import Contact from './components/Contact';
@@ -54,6 +55,7 @@ function App() {
         <Skills />
         <Certifications />
         <Experience />
+        <Keywraith />
         <Education />
         <Resume />
         <Contact />
