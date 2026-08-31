@@ -12,7 +12,7 @@ const Keywraith: React.FC = () => (
       subtitle="A side project where the keyboard becomes part of the action"
     />
 
-    <Reveal className="border-3 border-ink shadow-hard-lg">
+    <Reveal className="relative border-3 border-ink shadow-hard-lg">
       <div className="grid grid-cols-1 lg:grid-cols-12">
         <a
           href={KEYWRAITH_URL}
@@ -37,8 +37,8 @@ const Keywraith: React.FC = () => (
           </span>
         </a>
 
-        <div className="no-grid flex flex-col items-start bg-paper p-6 sm:p-8 lg:col-span-5">
-          <div className="flex items-center gap-3">
+        <div className="no-grid relative flex flex-col items-start overflow-hidden bg-paper p-6 sm:p-8 lg:col-span-5">
+          <div className="relative z-10 flex items-center gap-3">
             <img
               src="/keywraith/keywraith-mark-128.webp"
               srcSet="/keywraith/keywraith-mark-64.webp 64w, /keywraith/keywraith-mark-128.webp 128w"
@@ -60,16 +60,16 @@ const Keywraith: React.FC = () => (
             width={720}
             height={208}
             alt="Keywraith"
-            className="mt-8 w-full max-w-sm"
+            className="relative z-10 mt-8 w-full max-w-sm"
             loading="lazy"
             decoding="async"
           />
 
-          <p className="mt-6 measure text-2xs text-ink-soft">
+          <p className="relative z-10 mt-6 measure text-2xs text-ink-soft">
             A keyboard-first action game: type fast, react under pressure, and turn every keypress into part of the fight.
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-2">
+          <div className="relative z-10 mt-6 flex flex-wrap gap-2">
             <span className="tag tag-fill">Browser game</span>
             <span className="tag">Keyboard-first</span>
             <span className="tag">Side project</span>
@@ -79,10 +79,22 @@ const Keywraith: React.FC = () => (
             href={KEYWRAITH_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary mt-8"
+            className="btn btn-primary relative z-10 mt-8"
           >
             <Keyboard size={18} /> Play Keywraith <ArrowUpRight size={18} />
           </a>
+
+          <img
+            src="/keywraith/keywraith-maker-280.webp"
+            srcSet="/keywraith/keywraith-maker-280.webp 280w, /keywraith/keywraith-maker-420.webp 420w"
+            sizes="220px"
+            width={420}
+            height={630}
+            alt="Aaryan playing Keywraith on a mechanical keyboard"
+            className="pointer-events-none absolute -bottom-32 -right-20 z-0 hidden w-44 max-w-none opacity-95 lg:block"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </div>
     </Reveal>

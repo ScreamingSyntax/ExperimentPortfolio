@@ -3,6 +3,7 @@ import path from 'node:path';
 import sharp from 'sharp';
 
 const sourceDir = '/Users/aaryanjha/Documents/keywraithitchassets 2';
+const characterSource = '/Users/aaryanjha/Desktop/My ghibili/game.png';
 const outputDir = path.resolve('public/keywraith');
 
 const assets = [
@@ -26,4 +27,11 @@ for (const asset of assets) {
   }
 }
 
-console.log(`Generated ${assets.length} Keywraith asset sets in ${outputDir}`);
+for (const width of [280, 420]) {
+  await sharp(characterSource)
+    .resize({ width, withoutEnlargement: true })
+    .webp({ quality: 82, alphaQuality: 90, effort: 6 })
+    .toFile(path.join(outputDir, `keywraith-maker-${width}.webp`));
+}
+
+console.log(`Generated ${assets.length} Keywraith asset sets and the maker artwork in ${outputDir}`);
