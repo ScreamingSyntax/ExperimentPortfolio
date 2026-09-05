@@ -121,7 +121,6 @@ const Hero: React.FC = () => {
               alt="Illustration of Aaryan coding at a laptop"
               className="h-64 w-full border-3 border-ink bg-lime object-contain object-bottom shadow-hard sm:h-80"
               loading="eager"
-              fetchPriority="high"
             />
 
             <div className="terminal relative -mt-10 ml-auto w-full max-w-[19rem] border-3 border-ink p-4 shadow-hard sm:-mt-12">
