@@ -1,19 +1,50 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-type PetState = 'idle' | 'running-right' | 'running-left' | 'waving' | 'look';
+type PetState =
+  | 'idle'
+  | 'running-right'
+  | 'running-left'
+  | 'waving'
+  | 'jumping'
+  | 'failed'
+  | 'waiting'
+  | 'working'
+  | 'review'
+  | 'look';
 
-const ROWS: Record<Exclude<PetState, 'look'>, { row: number; frames: number; frameMs: number }> = {
+type AnimatedState = Exclude<PetState, 'look'>;
+
+const ROWS: Record<AnimatedState, { row: number; frames: number; frameMs: number }> = {
   idle: { row: 0, frames: 7, frameMs: 260 },
-  'running-right': { row: 1, frames: 8, frameMs: 110 },
-  'running-left': { row: 2, frames: 8, frameMs: 110 },
+  'running-right': { row: 1, frames: 8, frameMs: 105 },
+  'running-left': { row: 2, frames: 8, frameMs: 105 },
   waving: { row: 3, frames: 4, frameMs: 170 },
+  jumping: { row: 4, frames: 5, frameMs: 125 },
+  failed: { row: 5, frames: 8, frameMs: 180 },
+  waiting: { row: 6, frames: 6, frameMs: 210 },
+  working: { row: 7, frames: 6, frameMs: 175 },
+  review: { row: 8, frames: 6, frameMs: 210 },
 };
 
-const PET_WIDTH = 80;
-const EDGE_GAP = 16;
+const EDGE_GAP = 12;
+const POSITION_KEY = 'portfolio-pet-position-v1';
+const CLICK_REACTIONS: Array<{ state: AnimatedState; message: string; duration: number }> = [
+  { state: 'waving', message: 'HEY! 👋', duration: 1450 },
+  { state: 'jumping', message: "LET'S GO!", duration: 900 },
+  { state: 'working', message: 'SHIP IT.', duration: 1450 },
+  { state: 'review', message: 'LOOKS GOOD.', duration: 1450 },
+  { state: 'waiting', message: "WHAT'S NEXT?", duration: 1550 },
+];
 
 interface PortfolioPetProps {
   visible: boolean;
+}
+
+interface DragSession {
+  pointerId: number;
+  startX: number;
+  startLeft: number;
+  moved: boolean;
 }
 
 const PortfolioPet: React.FC<PortfolioPetProps> = ({ visible }) => {
@@ -22,11 +53,22 @@ const PortfolioPet: React.FC<PortfolioPetProps> = ({ visible }) => {
   const [left, setLeft] = useState(EDGE_GAP);
   const [lookFrame, setLookFrame] = useState(0);
   const [message, setMessage] = useState('');
+  const [moveDuration, setMoveDuration] = useState(2200);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [dragging, setDragging] = useState(false);
+  const [entered, setEntered] = useState(false);
+  const [behaviorRestart, setBehaviorRestart] = useState(0);
+
   const petRef = useRef<HTMLButtonElement>(null);
   const leftRef = useRef(EDGE_GAP);
   const stateRef = useRef<PetState>('idle');
-  const timersRef = useRef<number[]>([]);
+  const draggingRef = useRef(false);
+  const dragRef = useRef<DragSession | null>(null);
+  const messageTimerRef = useRef<number>();
+  const interactionTimersRef = useRef<number[]>([]);
+  const suppressClickRef = useRef(false);
+  const hoverHintShownRef = useRef(false);
+  const hasIntroducedRef = useRef(false);
 
   const changeState = useCallback((next: PetState) => {
     stateRef.current = next;
@@ -34,10 +76,33 @@ const PortfolioPet: React.FC<PortfolioPetProps> = ({ visible }) => {
     setFrame(0);
   }, []);
 
-  const clearTimers = useCallback(() => {
-    timersRef.current.forEach(window.clearTimeout);
-    timersRef.current = [];
+  const clearInteractionTimers = useCallback(() => {
+    interactionTimersRef.current.forEach(window.clearTimeout);
+    interactionTimersRef.current = [];
   }, []);
+
+  const showMessage = useCallback((nextMessage: string, duration = 1500) => {
+    window.clearTimeout(messageTimerRef.current);
+    setMessage(nextMessage);
+    messageTimerRef.current = window.setTimeout(() => setMessage(''), duration);
+  }, []);
+
+  const getHorizontalBounds = useCallback(() => {
+    const petWidth = petRef.current?.getBoundingClientRect().width ?? 132;
+    const rightControlReserve = window.innerWidth >= 640 ? 92 : 68;
+    return {
+      min: EDGE_GAP,
+      max: Math.max(EDGE_GAP, window.innerWidth - petWidth - rightControlReserve),
+    };
+  }, []);
+
+  const clampLeft = useCallback(
+    (value: number) => {
+      const bounds = getHorizontalBounds();
+      return Math.min(bounds.max, Math.max(bounds.min, value));
+    },
+    [getHorizontalBounds],
+  );
 
   const moveTo = useCallback((nextLeft: number) => {
     leftRef.current = nextLeft;
@@ -53,6 +118,20 @@ const PortfolioPet: React.FC<PortfolioPetProps> = ({ visible }) => {
   }, []);
 
   useEffect(() => {
+    if (!visible) return;
+
+    const savedValue = window.localStorage.getItem(POSITION_KEY);
+    const savedPosition = savedValue === null ? Number.NaN : Number(savedValue);
+    const bounds = getHorizontalBounds();
+    if (Number.isFinite(savedPosition)) {
+      moveTo(bounds.min + savedPosition * (bounds.max - bounds.min));
+    }
+
+    const entranceTimer = window.setTimeout(() => setEntered(true), 50);
+    return () => window.clearTimeout(entranceTimer);
+  }, [getHorizontalBounds, moveTo, visible]);
+
+  useEffect(() => {
     if (petState === 'look' || reducedMotion) return;
 
     const animation = ROWS[petState];
@@ -66,58 +145,131 @@ const PortfolioPet: React.FC<PortfolioPetProps> = ({ visible }) => {
 
   useEffect(() => {
     const keepOnScreen = () => {
-      const maxLeft = Math.max(EDGE_GAP, window.innerWidth - PET_WIDTH - EDGE_GAP);
-      moveTo(Math.min(leftRef.current, maxLeft));
+      const bounds = getHorizontalBounds();
+      moveTo(Math.min(bounds.max, Math.max(bounds.min, leftRef.current)));
     };
 
     window.addEventListener('resize', keepOnScreen);
     return () => window.removeEventListener('resize', keepOnScreen);
-  }, [moveTo]);
+  }, [getHorizontalBounds, moveTo]);
 
   useEffect(() => {
     if (!visible || reducedMotion) return;
 
     let cancelled = false;
-
-    const scheduleWalk = () => {
-      const wait = 9000 + Math.random() * 5000;
+    const timers: number[] = [];
+    const later = (callback: () => void, delay: number) => {
       const timer = window.setTimeout(() => {
-        if (cancelled || stateRef.current !== 'idle') {
-          scheduleWalk();
+        if (!cancelled) callback();
+      }, delay);
+      timers.push(timer);
+    };
+
+    function scheduleNext(delay: number) {
+      later(() => {
+        if (draggingRef.current) {
+          scheduleNext(1200);
           return;
         }
 
-        const maxLeft = Math.max(EDGE_GAP, window.innerWidth - PET_WIDTH - EDGE_GAP);
-        const nextLeft = EDGE_GAP + Math.random() * Math.max(0, maxLeft - EDGE_GAP);
-        changeState(nextLeft >= leftRef.current ? 'running-right' : 'running-left');
-        moveTo(nextLeft);
+        if (stateRef.current !== 'idle' && stateRef.current !== 'look') {
+          scheduleNext(1000);
+          return;
+        }
 
-        const stopTimer = window.setTimeout(() => {
-          changeState('idle');
-          scheduleWalk();
-        }, 2600);
-        timersRef.current.push(stopTimer);
-      }, wait);
-      timersRef.current.push(timer);
+        if (Math.random() < 0.58) travel();
+        else performPose();
+      }, delay);
+    }
+
+    const returnToIdle = (delay: number) => {
+      later(() => {
+        changeState('idle');
+        scheduleNext(1800 + Math.random() * 2300);
+      }, delay);
     };
 
-    scheduleWalk();
+    const performPose = () => {
+      const roll = Math.random();
+
+      if (roll < 0.22) {
+        changeState('jumping');
+        showMessage('BOING!', 750);
+        returnToIdle(820);
+      } else if (roll < 0.41) {
+        changeState('waving');
+        returnToIdle(1450);
+      } else if (roll < 0.61) {
+        changeState('working');
+        showMessage('BUILDING...', 1250);
+        returnToIdle(1700);
+      } else if (roll < 0.78) {
+        changeState('review');
+        returnToIdle(1650);
+      } else if (roll < 0.92) {
+        changeState('waiting');
+        showMessage('HMM...', 1100);
+        returnToIdle(1700);
+      } else {
+        changeState('failed');
+        showMessage('NEED COFFEE.', 1450);
+        returnToIdle(1800);
+      }
+    };
+
+    const travel = () => {
+      const bounds = getHorizontalBounds();
+      const range = bounds.max - bounds.min;
+      let destination = bounds.min + Math.random() * range;
+
+      if (range > 220 && Math.abs(destination - leftRef.current) < 120) {
+        destination = leftRef.current < bounds.min + range / 2 ? bounds.max : bounds.min;
+      }
+
+      const distance = Math.abs(destination - leftRef.current);
+      const duration = Math.min(4200, Math.max(1250, distance * 7.5));
+      setMoveDuration(duration);
+      changeState(destination >= leftRef.current ? 'running-right' : 'running-left');
+      moveTo(destination);
+
+      later(() => {
+        if (Math.random() < 0.34) {
+          changeState('jumping');
+          later(performPose, 720);
+        } else {
+          performPose();
+        }
+      }, duration);
+    };
+
+    if (!hasIntroducedRef.current) {
+      hasIntroducedRef.current = true;
+      changeState('jumping');
+      showMessage('HEY, I LIVE HERE! 👋', 2200);
+      later(() => changeState('waving'), 760);
+      later(() => {
+        changeState('idle');
+        showMessage('DRAG ME • CLICK ME', 2300);
+        scheduleNext(3200);
+      }, 2100);
+    } else {
+      scheduleNext(2400 + Math.random() * 1800);
+    }
+
     return () => {
       cancelled = true;
-      clearTimers();
+      timers.forEach(window.clearTimeout);
     };
-  }, [changeState, clearTimers, moveTo, reducedMotion, visible]);
+  }, [behaviorRestart, changeState, getHorizontalBounds, moveTo, reducedMotion, showMessage, visible]);
 
   useEffect(() => {
     if (!visible || reducedMotion) return;
 
-    let idleTimer = 0;
     let animationFrame = 0;
+    let lookTimer = 0;
 
     const handlePointerMove = (event: PointerEvent) => {
-      if (stateRef.current === 'running-left' || stateRef.current === 'running-right' || stateRef.current === 'waving') {
-        return;
-      }
+      if (draggingRef.current || (stateRef.current !== 'idle' && stateRef.current !== 'look')) return;
 
       window.cancelAnimationFrame(animationFrame);
       animationFrame = window.requestAnimationFrame(() => {
@@ -131,8 +283,8 @@ const PortfolioPet: React.FC<PortfolioPetProps> = ({ visible }) => {
         setLookFrame(Math.round(normalized / 22.5) % 16);
         changeState('look');
 
-        window.clearTimeout(idleTimer);
-        idleTimer = window.setTimeout(() => changeState('idle'), 900);
+        window.clearTimeout(lookTimer);
+        lookTimer = window.setTimeout(() => changeState('idle'), 700);
       });
     };
 
@@ -140,48 +292,138 @@ const PortfolioPet: React.FC<PortfolioPetProps> = ({ visible }) => {
     return () => {
       window.removeEventListener('pointermove', handlePointerMove);
       window.cancelAnimationFrame(animationFrame);
-      window.clearTimeout(idleTimer);
+      window.clearTimeout(lookTimer);
     };
   }, [changeState, reducedMotion, visible]);
 
-  const wave = () => {
-    if (!visible) return;
-    changeState('waving');
-    setMessage('HEY! 👋');
+  useEffect(
+    () => () => {
+      clearInteractionTimers();
+      window.clearTimeout(messageTimerRef.current);
+    },
+    [clearInteractionTimers],
+  );
 
-    const messageTimer = window.setTimeout(() => setMessage(''), 1300);
-    const idleTimer = window.setTimeout(() => changeState('idle'), 1400);
-    timersRef.current.push(messageTimer, idleTimer);
+  const runReaction = () => {
+    if (!visible || suppressClickRef.current) return;
+    clearInteractionTimers();
+    setBehaviorRestart((current) => current + 1);
+    const reaction = CLICK_REACTIONS[Math.floor(Math.random() * CLICK_REACTIONS.length)];
+    changeState(reaction.state);
+    showMessage(reaction.message, reaction.duration - 100);
+    interactionTimersRef.current.push(window.setTimeout(() => changeState('idle'), reaction.duration));
+  };
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLButtonElement>) => {
+    if (!visible || event.button !== 0) return;
+    clearInteractionTimers();
+    const renderedLeft = clampLeft(event.currentTarget.parentElement?.getBoundingClientRect().left ?? leftRef.current);
+    moveTo(renderedLeft);
+    event.currentTarget.setPointerCapture(event.pointerId);
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startLeft: renderedLeft,
+      moved: false,
+    };
+    draggingRef.current = true;
+    setDragging(true);
+    changeState('idle');
+    showMessage('DRAG ME!', 1000);
+    setBehaviorRestart((current) => current + 1);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLButtonElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    const delta = event.clientX - drag.startX;
+    if (Math.abs(delta) > 5) drag.moved = true;
+    if (!drag.moved) return;
+
+    const nextLeft = clampLeft(drag.startLeft + delta);
+    const direction = nextLeft >= leftRef.current ? 'running-right' : 'running-left';
+    if (stateRef.current !== direction) changeState(direction);
+    moveTo(nextLeft);
+  };
+
+  const finishDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    draggingRef.current = false;
+    dragRef.current = null;
+    setDragging(false);
+
+    if (!drag.moved) return;
+
+    suppressClickRef.current = true;
+    window.setTimeout(() => {
+      suppressClickRef.current = false;
+    }, 0);
+
+    const bounds = getHorizontalBounds();
+    const ratio = bounds.max === bounds.min ? 0 : (leftRef.current - bounds.min) / (bounds.max - bounds.min);
+    window.localStorage.setItem(POSITION_KEY, String(Math.min(1, Math.max(0, ratio))));
+    changeState('jumping');
+    showMessage('NICE SPOT!', 950);
+    interactionTimersRef.current.push(
+      window.setTimeout(() => {
+        changeState('idle');
+        setBehaviorRestart((current) => current + 1);
+      }, 780),
+    );
+  };
+
+  const handleHover = (event: React.PointerEvent<HTMLButtonElement>) => {
+    if (event.pointerType !== 'mouse' || hoverHintShownRef.current || draggingRef.current) return;
+    hoverHintShownRef.current = true;
+    showMessage('GRAB OR CLICK ME!', 1400);
   };
 
   const row = petState === 'look' ? (lookFrame < 8 ? 9 : 10) : ROWS[petState].row;
   const column = petState === 'look' ? lookFrame % 8 : frame;
+  const isTravelling = petState === 'running-left' || petState === 'running-right';
 
   return (
     <div
-      className={`pointer-events-none fixed bottom-0 z-40 transition-opacity duration-200 ${
-        visible ? 'opacity-100' : 'opacity-0'
+      className={`portfolio-pet pointer-events-none fixed bottom-0 z-[60] ${
+        visible ? 'portfolio-pet--visible' : ''
+      } ${entered ? 'portfolio-pet--entered' : ''} portfolio-pet--${petState} ${
+        dragging ? 'portfolio-pet--dragging' : ''
       }`}
       style={{
         left,
-        transitionProperty: petState.startsWith('running') ? 'left, opacity' : 'opacity',
-        transitionDuration: petState.startsWith('running') ? '2600ms, 200ms' : '200ms',
-        transitionTimingFunction: petState.startsWith('running') ? 'linear' : undefined,
+        transitionProperty: dragging ? 'opacity' : isTravelling ? 'left, opacity' : 'opacity',
+        transitionDuration: dragging ? '100ms' : isTravelling ? `${moveDuration}ms, 200ms` : '200ms',
+        transitionTimingFunction: isTravelling ? 'linear' : undefined,
       }}
       aria-hidden={!visible}
     >
       {message && (
-        <span className="absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap border-2 border-ink bg-lime px-2 py-1 label text-on-lime shadow-hard-xs">
+        <span
+          aria-hidden="true"
+          className={`portfolio-pet__message absolute bottom-full mb-1 whitespace-nowrap border-2 border-ink bg-lime px-2.5 py-1.5 label text-on-lime shadow-hard-xs ${
+            left < 120 ? 'left-0' : 'left-1/2 -translate-x-1/2'
+          }`}
+        >
           {message}
         </span>
       )}
+      <span className="portfolio-pet__ground" aria-hidden="true" />
       <button
         ref={petRef}
         type="button"
-        onClick={wave}
+        onClick={runReaction}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={finishDrag}
+        onPointerCancel={finishDrag}
+        onPointerEnter={handleHover}
         tabIndex={visible ? 0 : -1}
-        aria-label="Wave to Aaryan's animated companion"
-        className="pointer-events-auto block border-0 bg-transparent p-0 transition-transform duration-100 hover:-translate-y-1 focus-visible:outline focus-visible:outline-3 focus-visible:outline-violet"
+        aria-label="Animated Aaryan companion. Click for a reaction or drag to move."
+        title="Drag me or click me"
+        className="portfolio-pet__button pointer-events-auto block border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-3 focus-visible:outline-violet"
       >
         <span
           className="portfolio-pet__sprite block"

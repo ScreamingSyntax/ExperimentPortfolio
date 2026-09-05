@@ -245,20 +245,140 @@
 /* The v2 pet atlas is 8 columns by 11 rows. Percentage positioning keeps
    every 192x208 source cell aligned while the rendered companion scales. */
 .portfolio-pet__sprite {
-  width: 4rem;
+  width: 6rem;
   aspect-ratio: 192 / 208;
   background-image: url('/pet/aaryan-spritesheet.webp');
   background-repeat: no-repeat;
   background-size: 800% 1100%;
+  filter: drop-shadow(2px 3px 0 var(--ink));
+  image-rendering: auto;
+  transition: filter 120ms ease;
+}
+
+.portfolio-pet {
+  opacity: 0;
+  transform: translateY(16px) scale(0.9);
+  transform-origin: bottom center;
+  will-change: left, transform;
+}
+
+.portfolio-pet--visible {
+  opacity: 1;
+}
+
+.portfolio-pet--entered {
+  animation: pet-arrive 520ms cubic-bezier(0.2, 0.9, 0.25, 1.25) both;
+}
+
+.portfolio-pet__button {
+  position: relative;
+  z-index: 1;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform-origin: bottom center;
+  transition: transform 120ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.portfolio-pet__button:hover {
+  transform: translateY(-5px) scale(1.04);
+}
+
+.portfolio-pet--dragging .portfolio-pet__button {
+  transform: translateY(-9px) scale(1.08);
+}
+
+.portfolio-pet--dragging .portfolio-pet__sprite {
+  filter: drop-shadow(4px 7px 0 var(--ink));
+}
+
+.portfolio-pet--jumping .portfolio-pet__button {
+  animation: pet-hop 720ms cubic-bezier(0.2, 0.85, 0.3, 1) both;
+}
+
+.portfolio-pet--failed .portfolio-pet__button {
+  animation: pet-wobble 420ms ease-in-out 2;
+}
+
+.portfolio-pet__ground {
+  position: absolute;
+  right: 15%;
+  bottom: 2px;
+  left: 15%;
+  height: 7px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--violet);
+  opacity: 0.55;
+  transform: scaleX(0.8);
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.portfolio-pet--jumping .portfolio-pet__ground,
+.portfolio-pet--dragging .portfolio-pet__ground {
+  opacity: 0.25;
+  transform: scaleX(0.48);
+}
+
+.portfolio-pet__message {
+  animation: pet-message-in 180ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes pet-arrive {
+  from {
+    transform: translateY(30px) scale(0.7);
+  }
+  65% {
+    transform: translateY(-10px) scale(1.06);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pet-hop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  45% {
+    transform: translateY(-30px) scale(1.04);
+  }
+}
+
+@keyframes pet-wobble {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  35% {
+    transform: rotate(-4deg) translateX(-3px);
+  }
+  70% {
+    transform: rotate(4deg) translateX(3px);
+  }
+}
+
+@keyframes pet-message-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (min-width: 640px) {
   .portfolio-pet__sprite {
-    width: 5rem;
+    width: 8.25rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .portfolio-pet {
+    transform: none;
+  }
+
   .portfolio-pet__sprite {
     background-position: 0 0 !important;
   }
