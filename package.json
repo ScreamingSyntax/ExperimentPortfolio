@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "og": "node design/build-og.mjs",
     "characters": "node design/build-characters.mjs",
-    "keywraith": "node design/build-keywraith.mjs"
+    "keywraith": "node design/build-keywraith.mjs",
+    "pet": "node design/build-pet.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

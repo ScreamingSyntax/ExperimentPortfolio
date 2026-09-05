@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import CustomCursor from './components/ui/CustomCursor';
 import ScrollToTop from './components/ui/ScrollToTop';
 import Loader from './components/ui/Loader';
+import PortfolioPet from './components/ui/PortfolioPet';
 
 const THEME_KEY = 'theme-v2';
 
@@ -61,6 +62,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <PortfolioPet visible={!isLoading} />
       <ScrollToTop />
     </div>
   );

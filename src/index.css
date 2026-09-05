@@ -242,6 +242,28 @@
   opacity: 1;
 }
 
+/* The v2 pet atlas is 8 columns by 11 rows. Percentage positioning keeps
+   every 192x208 source cell aligned while the rendered companion scales. */
+.portfolio-pet__sprite {
+  width: 4rem;
+  aspect-ratio: 192 / 208;
+  background-image: url('/pet/aaryan-spritesheet.webp');
+  background-repeat: no-repeat;
+  background-size: 800% 1100%;
+}
+
+@media (min-width: 640px) {
+  .portfolio-pet__sprite {
+    width: 5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-pet__sprite {
+    background-position: 0 0 !important;
+  }
+}
+
 .js .reveal {
   opacity: 0;
   transform: scale(0.96);
